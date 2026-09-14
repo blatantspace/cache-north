@@ -1,0 +1,6 @@
+.http-server.pid
+__pycache__/
+*.pyc
+.DS_Store
+ben-faves.json
+shop/ben-faves.json

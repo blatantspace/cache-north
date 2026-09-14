@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Extras · Faves · cache.north</title>
+  <meta name="description" content="Personal faves from the Wear pretend store. Sort, filter, jot notes. Not for sale." />
+  <meta name="theme-color" content="#0A0C0E" />
+  <link rel="icon" href="../assets/mark.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --void: #0A0C0E;
+      --panel: #12161B;
+      --steel: #C5CCD3;
+      --steel-dim: #7A848E;
+      --snow: #F2F4F6;
+      --navy: #1B2836;
+      --moss: #2A3D32;
+      --led: #E02020;
+      --font: "Space Grotesk", system-ui, sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--void);
+      color: var(--snow);
+      font-family: var(--font);
+      font-size: 1rem;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100svh;
+    }
+    a { color: inherit; text-decoration: none; }
+    a:hover { opacity: 0.85; }
+    img { display: block; max-width: 100%; }
+    button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    textarea, select, input { font: inherit; color: inherit; }
+
+    .bar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1.25rem;
+      background: rgba(10, 12, 14, 0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(197, 204, 211, 0.12);
+    }
+    .bar-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      font-size: 0.95rem;
+    }
+    .bar-brand svg { width: 18px; height: 18px; color: var(--snow); }
+    .bar-nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+    }
+    .bar-nav a:hover { color: var(--snow); opacity: 1; }
+    .bar-nav .active { color: var(--snow); }
+    .fave-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.65rem;
+      border: 1px solid rgba(224, 32, 32, 0.45);
+      color: var(--snow);
+    }
+    .fave-pill .n {
+      color: var(--led);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 2.5rem));
+      margin: 0 auto;
+      padding: 2rem 0 5rem;
+    }
+
+    .hero {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(197, 204, 211, 0.14);
+    }
+    .kicker {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--led);
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 600;
+      letter-spacing: -0.045em;
+      line-height: 1.05;
+    }
+    .hero h1 .led {
+      display: inline-block;
+      width: 0.12em;
+      height: 0.12em;
+      margin: 0 0.02em 0.1em;
+      border-radius: 50%;
+      background: var(--led);
+      box-shadow: 0 0 12px rgba(224, 32, 32, 0.55);
+      vertical-align: middle;
+    }
+    .hero p {
+      max-width: 38rem;
+      color: var(--steel);
+      font-size: 1.02rem;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+    .toolbar-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      align-items: center;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      flex: 1;
+      align-items: center;
+    }
+    .filter-label {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+      margin-right: 0.15rem;
+    }
+    .chip {
+      padding: 0.45rem 0.7rem;
+      border: 1px solid rgba(197, 204, 211, 0.22);
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .chip:hover, .chip.on {
+      color: var(--snow);
+      border-color: var(--snow);
+    }
+    .chip.on { background: rgba(242, 244, 246, 0.08); }
+    .actions { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .sort-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .sort-wrap select {
+      background: var(--panel);
+      border: 1px solid rgba(197, 204, 211, 0.28);
+      padding: 0.5rem 0.7rem;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--snow);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.7rem 0.95rem;
+      background: var(--snow);
+      color: var(--void);
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--snow);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--snow);
+      border-color: rgba(242, 244, 246, 0.28);
+    }
+    .btn-ghost:hover { border-color: var(--snow); }
+    .btn-led {
+      background: transparent;
+      color: var(--led);
+      border-color: rgba(224, 32, 32, 0.55);
+    }
+    .btn-led:hover { border-color: var(--led); background: rgba(224, 32, 32, 0.08); }
+    .btn-sm { padding: 0.45rem 0.65rem; font-size: 0.58rem; }
+
+    .shelf-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+      margin: 0 0 0.85rem;
+    }
+    .shelf-label .count {
+      color: var(--led);
+      margin-left: 0.4rem;
+    }
+
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 1rem;
+      background: var(--panel);
+      border: 1px solid rgba(197, 204, 211, 0.12);
+      padding: 0.85rem;
+      transition: border-color 0.2s;
+    }
+    .row:hover { border-color: rgba(197, 204, 211, 0.35); }
+    .row.faved { border-color: rgba(224, 32, 32, 0.28); }
+    @media (max-width: 640px) {
+      .row { grid-template-columns: 96px 1fr; }
+    }
+    .row-media {
+      aspect-ratio: 1;
+      background: var(--navy);
+      overflow: hidden;
+    }
+    .row-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .row-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      min-width: 0;
+    }
+    .row-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .sku {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+    }
+    .meta-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.4rem;
+      border: 1px solid rgba(197, 204, 211, 0.25);
+      color: var(--steel-dim);
+      white-space: nowrap;
+    }
+    .tag.status-promoted {
+      color: var(--led);
+      border-color: rgba(224, 32, 32, 0.5);
+    }
+    .tag.niche {
+      opacity: 0.75;
+      border-color: rgba(197, 204, 211, 0.18);
+      font-size: 0.5rem;
+    }
+    .row h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+    }
+    .mash {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      line-height: 1.45;
+      color: var(--steel-dim);
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .price {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+    }
+    .faved-at {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+    }
+    .note-label {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+      margin-top: 0.25rem;
+    }
+    .note-field {
+      width: 100%;
+      min-height: 2.6rem;
+      resize: vertical;
+      background: rgba(10, 12, 14, 0.55);
+      border: 1px solid rgba(197, 204, 211, 0.18);
+      padding: 0.55rem 0.65rem;
+      font-size: 0.88rem;
+      color: var(--snow);
+      line-height: 1.4;
+    }
+    .note-field:focus {
+      outline: none;
+      border-color: rgba(224, 32, 32, 0.45);
+    }
+    .note-field::placeholder { color: var(--steel-dim); }
+    .row-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.35rem;
+    }
+
+    .empty {
+      padding: 2.5rem 1.25rem;
+      border: 1px dashed rgba(197, 204, 211, 0.2);
+      color: var(--steel-dim);
+      text-align: center;
+      display: grid;
+      gap: 1rem;
+      justify-items: center;
+    }
+    .empty p {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      max-width: 28rem;
+      line-height: 1.6;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      z-index: 80;
+      padding: 0.85rem 1.1rem;
+      background: var(--snow);
+      color: var(--void);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: transform 0.25s ease;
+      pointer-events: none;
+      max-width: calc(100% - 2rem);
+      text-align: center;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    .note {
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(197, 204, 211, 0.12);
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      color: var(--steel-dim);
+      line-height: 1.6;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <a class="bar-brand" href="../">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><path fill="currentColor" d="M50 6.5 L54.5 22 62 10.5 61.5 26.5 76 18.5 69.5 32.5 86 33.5 72.5 44.5 85 55.5 67.5 55 72 70.5 56.5 62.5 57.5 79.5 50 70.5 V93.5 H47.5 V70.5 L40 79.5 41 62.5 25.5 70.5 30 55 12.5 55.5 25 44.5 11.5 33.5 28 32.5 21.5 18.5 36 26.5 35.5 10.5 43 22 Z"/></svg>
+      cache.north
+    </a>
+    <nav class="bar-nav">
+      <a href="../">Muster</a>
+      <a href="./">Wear · Kit</a>
+      <a class="active" href="./faves.html">Extras · Faves</a>
+      <span class="fave-pill" id="fave-pill" title="Personal faves">♥ <span class="n" id="fave-count">0</span></span>
+    </nav>
+  </header>
+
+  <div class="wrap">
+    <section class="hero">
+      <p class="kicker">Extras · personal shortlist · CAD · not for sale</p>
+      <h1>Faves<span class="led" aria-hidden="true"></span></h1>
+      <p>
+        Your private shelf of Wear kit that hits. Heart from the shop (or here),
+        sort and filter the list, jot why you liked it. Separate from Promote.
+        Liking ≠ featuring the storefront.
+      </p>
+    </section>
+
+    <div class="toolbar">
+      <div class="toolbar-row">
+        <div class="sort-wrap">
+          <span class="filter-label">Sort</span>
+          <label class="sr-only" for="sort-select">Sort faves</label>
+          <select id="sort-select">
+            <option value="newest">Newest faved</option>
+            <option value="name">Name</option>
+            <option value="price-asc">Price · low → high</option>
+            <option value="price-desc">Price · high → low</option>
+            <option value="lineage">Lineage</option>
+            <option value="theme">Kit type</option>
+          </select>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-ghost" id="btn-export">Export faves JSON</button>
+          <button type="button" class="btn btn-ghost" id="btn-import">Import JSON</button>
+          <input type="file" id="import-file" accept="application/json,.json" class="sr-only" />
+          <button type="button" class="btn btn-ghost" id="btn-clear">Clear faves</button>
+        </div>
+      </div>
+      <div class="toolbar-row">
+        <div class="filters" role="tablist" aria-label="Filter by kit type">
+          <span class="filter-label">Kit</span>
+          <button type="button" class="chip on" data-theme="all">All</button>
+          <button type="button" class="chip" data-theme="boots">Boots</button>
+          <button type="button" class="chip" data-theme="gumsole">Gumsole</button>
+          <button type="button" class="chip" data-theme="shells">Shells</button>
+          <button type="button" class="chip" data-theme="gaiters">Gaiters</button>
+          <button type="button" class="chip" data-theme="overboots">Overboots</button>
+          <button type="button" class="chip" data-theme="footwear">Footwear</button>
+          <button type="button" class="chip" data-theme="mitts">Mitts</button>
+          <button type="button" class="chip" data-theme="hat">Hats</button>
+          <button type="button" class="chip" data-theme="eyewear">Eyewear</button>
+          <button type="button" class="chip" data-theme="mask">Masks</button>
+          <button type="button" class="chip" data-theme="protection">Wind leather</button>
+          <button type="button" class="chip" data-theme="skis">Skis</button>
+        </div>
+      </div>
+      <div class="toolbar-row">
+        <div class="filters" role="tablist" aria-label="Filter by parent keeper">
+          <span class="filter-label">Lineage</span>
+          <button type="button" class="chip on" data-lineage="all">All</button>
+          <button type="button" class="chip" data-lineage="v4-021">021 Strap</button>
+          <button type="button" class="chip" data-lineage="v4-027">027 Gaunt</button>
+          <button type="button" class="chip" data-lineage="v4-034">034 Point</button>
+          <button type="button" class="chip" data-lineage="extras">Extras kit</button>
+          <button type="button" class="chip" data-lineage="earlier">Earlier</button>
+        </div>
+      </div>
+      <div class="toolbar-row">
+        <div class="filters" role="tablist" aria-label="Filter by shop status">
+          <span class="filter-label">Status</span>
+          <button type="button" class="chip on" data-status="all">All</button>
+          <button type="button" class="chip" data-status="promoted">Promoted</button>
+          <button type="button" class="chip" data-status="idea">Ideas</button>
+          <button type="button" class="chip" data-status="archived">Archived</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="shelf-label">Your faves <span class="count" id="list-count">0</span></p>
+    <div class="list" id="fave-list"></div>
+
+    <p class="note">
+      Faves live in localStorage (<code>cacheNorth.shop.faves</code>) as
+      <code>{ id: { favedAt, note } }</code>. Promote / teaser keys stay separate.
+      Same heart on Wear · Kit writes here. Catalogue · <code>catalog.json</code>.
+      On localhost, Ben’s machine also mirrors to <code>ben-faves.json</code> for agents.
+      <span id="disk-sync-status" hidden></span>
+    </p>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const LS_FAVES = "cacheNorth.shop.faves";
+    const LS_FAVES_UPDATED = "cacheNorth.shop.favesUpdated";
+    const LS_STATUS = "cacheNorth.shop.status";
+    const FAVES_API = "/api/faves";
+    const VALID = new Set(["idea", "promoted", "archived"]);
+
+    let products = [];
+    let themeFilter = "all";
+    let lineageFilter = "all";
+    let statusFilter = "all";
+    let sortBy = "newest";
+    let noteTimers = {};
+    let diskSyncOk = null;
+
+    function isLocalHost() {
+      const h = location.hostname;
+      return h === "localhost" || h === "127.0.0.1" || h === "[::1]";
+    }
+
+    function setDiskSyncStatus(ok, detail) {
+      diskSyncOk = ok;
+      const el = document.getElementById("disk-sync-status");
+      if (!el) return;
+      if (!isLocalHost()) {
+        el.hidden = true;
+        return;
+      }
+      el.hidden = false;
+      el.textContent = ok ? (detail || " · disk sync on") : " · disk sync off";
+    }
+
+    function coreFavesMap(map) {
+      const out = {};
+      Object.keys(map || {}).forEach((id) => {
+        const entry = map[id];
+        if (!entry || typeof entry !== "object") return;
+        out[id] = {
+          favedAt: entry.favedAt || new Date().toISOString(),
+          note: typeof entry.note === "string" ? entry.note : ""
+        };
+      });
+      return out;
+    }
+
+    function parseTs(s) {
+      const t = Date.parse(s || "");
+      return Number.isFinite(t) ? t : 0;
+    }
+
+    function mergeFaveMaps(a, b) {
+      const out = { ...coreFavesMap(a) };
+      Object.keys(coreFavesMap(b)).forEach((id) => {
+        const other = b[id];
+        if (!out[id]) {
+          out[id] = other;
+          return;
+        }
+        const cur = out[id];
+        if (parseTs(other.favedAt) >= parseTs(cur.favedAt)) {
+          out[id] = {
+            favedAt: other.favedAt || cur.favedAt,
+            note: (other.note && other.note.length) ? other.note : (cur.note || "")
+          };
+        } else if ((!cur.note || !cur.note.length) && other.note) {
+          out[id] = { ...cur, note: other.note };
+        }
+      });
+      return out;
+    }
+
+    async function pushFavesToDisk(map) {
+      if (!isLocalHost()) return;
+      try {
+        const res = await fetch(FAVES_API, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ faves: coreFavesMap(map) })
+        });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+        if (data && data.updated) {
+          localStorage.setItem(LS_FAVES_UPDATED, data.updated);
+        } else {
+          localStorage.setItem(LS_FAVES_UPDATED, new Date().toISOString());
+        }
+        setDiskSyncStatus(true);
+      } catch (err) {
+        console.warn("faves disk sync failed", err);
+        setDiskSyncStatus(false);
+      }
+    }
+
+    async function hydrateFavesFromDisk() {
+      if (!isLocalHost()) return;
+      try {
+        const res = await fetch(FAVES_API, { cache: "no-store" });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+        const diskFaves = coreFavesMap((data && data.faves) || {});
+        const diskUpdated = (data && data.updated) || "";
+        const lsUpdated = localStorage.getItem(LS_FAVES_UPDATED) || "";
+        const lsFaves = loadFaves();
+        let merged;
+        if (parseTs(diskUpdated) >= parseTs(lsUpdated) && Object.keys(diskFaves).length) {
+          merged = mergeFaveMaps(diskFaves, lsFaves);
+        } else if (Object.keys(diskFaves).length) {
+          merged = mergeFaveMaps(lsFaves, diskFaves);
+        } else {
+          merged = lsFaves;
+        }
+        saveMap(LS_FAVES, merged);
+        const newest = parseTs(diskUpdated) >= parseTs(lsUpdated) ? diskUpdated : (lsUpdated || diskUpdated);
+        if (newest) localStorage.setItem(LS_FAVES_UPDATED, newest);
+        setDiskSyncStatus(true);
+        await pushFavesToDisk(merged);
+      } catch (err) {
+        console.warn("faves disk hydrate failed", err);
+        setDiskSyncStatus(false);
+      }
+    }
+
+    function loadMap(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "{}") || {}; }
+      catch { return {}; }
+    }
+    function saveMap(key, map) {
+      localStorage.setItem(key, JSON.stringify(map));
+    }
+
+    function loadFaves() {
+      const raw = loadMap(LS_FAVES);
+      const out = {};
+      Object.keys(raw).forEach((id) => {
+        const entry = raw[id];
+        if (entry === true || entry === 1) {
+          out[id] = { favedAt: new Date().toISOString(), note: "" };
+        } else if (entry && typeof entry === "object") {
+          out[id] = {
+            favedAt: entry.favedAt || new Date().toISOString(),
+            note: typeof entry.note === "string" ? entry.note : ""
+          };
+        }
+      });
+      return out;
+    }
+
+    function saveFaves(map) {
+      saveMap(LS_FAVES, map);
+      localStorage.setItem(LS_FAVES_UPDATED, new Date().toISOString());
+      refreshCount();
+      pushFavesToDisk(map);
+    }
+
+    function isFaved(id) {
+      return Object.prototype.hasOwnProperty.call(loadFaves(), id);
+    }
+
+    function toggleFave(id, on) {
+      const map = loadFaves();
+      if (on) {
+        if (!map[id]) map[id] = { favedAt: new Date().toISOString(), note: "" };
+      } else {
+        delete map[id];
+      }
+      saveFaves(map);
+    }
+
+    function setNote(id, note) {
+      const map = loadFaves();
+      if (!map[id]) return;
+      map[id].note = note;
+      saveFaves(map);
+    }
+
+    function resolveStatus(p) {
+      const map = loadMap(LS_STATUS);
+      if (map[p.id] && VALID.has(map[p.id])) return map[p.id];
+      return p.status || "idea";
+    }
+
+    function money(n) {
+      return new Intl.NumberFormat("en-CA", {
+        style: "currency",
+        currency: "CAD",
+        maximumFractionDigits: 0
+      }).format(n);
+    }
+
+    function toast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => el.classList.remove("show"), 2600);
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function refreshCount() {
+      const n = Object.keys(loadFaves()).length;
+      const el = document.getElementById("fave-count");
+      if (el) el.textContent = String(n);
+    }
+
+    function lineageLabel(p) {
+      const key = p.parentKeeper || (
+        ["v4-021", "v4-027", "v4-034"].includes(p.id) ? p.id : null
+      );
+      if (key === "v4-021") return "021 Strap";
+      if (key === "v4-027") return "027 Gaunt";
+      if (key === "v4-034") return "034 Point";
+      if (p.lineage && String(p.lineage).startsWith("v4-")) {
+        return lineageLabel({ id: p.lineage, parentKeeper: p.lineage });
+      }
+      return "Earlier";
+    }
+
+    function lineageSortKey(p) {
+      const key = p.parentKeeper || p.lineage || p.id || "";
+      if (key === "v4-021" || p.id === "v4-021") return "1-021";
+      if (key === "v4-027" || p.id === "v4-027") return "2-027";
+      if (key === "v4-034" || p.id === "v4-034") return "3-034";
+      return "9-" + (p.name || "");
+    }
+
+    function kitOf(p) {
+      return String(p.kit || p.theme || "").toLowerCase();
+    }
+
+    function isNiche(p) {
+      return p.section === "niche" || p.niche === true;
+    }
+
+    function isGumsole(p) {
+      const id = String(p.id || "");
+      return kitOf(p) === "gumsole" || id.startsWith("v7-gs") ||
+        /gumsole/i.test(p.name || "") || /gumsole/i.test(p.sku || "");
+    }
+
+    function matchesTheme(p) {
+      if (themeFilter === "all") return true;
+      const theme = String(p.theme || "").toLowerCase();
+      const kit = kitOf(p);
+      if (themeFilter === "gaiters") {
+        return theme === "gaiters" || kit === "gaiters" || !!p.gaiter;
+      }
+      if (themeFilter === "gumsole") {
+        return isGumsole(p);
+      }
+      if (themeFilter === "boots") {
+        return theme === "boots" || kit === "boots" || isGumsole(p);
+      }
+      return theme === themeFilter || kit === themeFilter;
+    }
+
+    function matchesLineage(p) {
+      if (lineageFilter === "all") return true;
+      const id = String(p.id || "");
+      if (lineageFilter === "extras") {
+        return (p.lineage === "extras") || id.startsWith("v6-") ||
+          (id.startsWith("v7-") && !id.startsWith("v7-gs") &&
+            (p.kit === "hat" || p.kit === "mask" || p.kit === "eyewear" ||
+              p.kit === "protection" || p.kit === "skis" || p.theme === "hat" ||
+              p.theme === "mask" || p.theme === "eyewear" || p.theme === "protection" ||
+              p.theme === "skis"));
+      }
+      if (lineageFilter === "earlier") {
+        return !p.parentKeeper && !id.startsWith("v5-") &&
+          !id.startsWith("v6-") &&
+          !id.startsWith("v7-") &&
+          p.lineage !== "extras" &&
+          !["v4-021", "v4-027", "v4-034"].includes(p.id);
+      }
+      if (p.id === lineageFilter) return true;
+      return (p.parentKeeper || p.lineage) === lineageFilter;
+    }
+
+    function matchesStatus(p) {
+      if (statusFilter === "all") return true;
+      return p._status === statusFilter;
+    }
+
+    function formatFavedAt(iso) {
+      if (!iso) return "";
+      try {
+        const d = new Date(iso);
+        return d.toLocaleString("en-CA", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        });
+      } catch { return iso; }
+    }
+
+    function rowHTML(p) {
+      const status = p._status;
+      const note = p._fave.note || "";
+      return `
+        <article class="row faved" data-id="${escapeHtml(p.id)}">
+          <div class="row-media">
+            <a href="./?sku=${encodeURIComponent(p.sku)}">
+              <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy" />
+            </a>
+          </div>
+          <div class="row-body">
+            <div class="row-top">
+              <span class="sku">${escapeHtml(p.sku)}</span>
+              <div class="meta-chips">
+                <span class="tag">${escapeHtml(p.theme || "kit")}</span>
+                <span class="tag">${escapeHtml(lineageLabel(p))}</span>
+                <span class="tag status-${escapeHtml(status)}">${escapeHtml(status)}</span>
+                ${isNiche(p) ? `<span class="tag niche">Niche</span>` : ""}
+              </div>
+            </div>
+            <h3><a href="./?sku=${encodeURIComponent(p.sku)}">${escapeHtml(p.name)}</a></h3>
+            <p class="mash">Mash · ${escapeHtml(p.mash || "n/a")}</p>
+            <div class="price-row">
+              <span class="price">${money(p.price)}</span>
+              <span class="faved-at">Faved · ${escapeHtml(formatFavedAt(p._fave.favedAt))}</span>
+            </div>
+            <label class="note-label" for="note-${escapeHtml(p.id)}">Why you liked it</label>
+            <textarea
+              class="note-field"
+              id="note-${escapeHtml(p.id)}"
+              data-note="${escapeHtml(p.id)}"
+              placeholder="Optional note · stays local"
+              rows="2"
+            >${escapeHtml(note)}</textarea>
+            <div class="row-actions">
+              <button type="button" class="btn btn-led btn-sm" data-unfave="${escapeHtml(p.id)}">Unfave</button>
+              <a class="btn btn-ghost btn-sm" href="./?sku=${encodeURIComponent(p.sku)}">Open in shop</a>
+            </div>
+          </div>
+        </article>`;
+    }
+
+    function emptyHTML() {
+      return `
+        <div class="empty">
+          <p>No faves yet. Wander Wear · Kit and heart what hits.</p>
+          <a class="btn btn-led" href="./">Browse the shop</a>
+        </div>`;
+    }
+
+    function favedProducts() {
+      const faves = loadFaves();
+      return products
+        .filter((p) => faves[p.id])
+        .map((p) => ({
+          ...p,
+          _status: resolveStatus(p),
+          _fave: faves[p.id]
+        }));
+    }
+
+    function sortList(list) {
+      const copy = list.slice();
+      copy.sort((a, b) => {
+        if (sortBy === "name") {
+          return (a.name || "").localeCompare(b.name || "", "en-CA");
+        }
+        if (sortBy === "price-asc") return (a.price || 0) - (b.price || 0);
+        if (sortBy === "price-desc") return (b.price || 0) - (a.price || 0);
+        if (sortBy === "lineage") {
+          const c = lineageSortKey(a).localeCompare(lineageSortKey(b), "en-CA");
+          return c || (a.name || "").localeCompare(b.name || "", "en-CA");
+        }
+        if (sortBy === "theme") {
+          const c = (a.theme || "").localeCompare(b.theme || "", "en-CA");
+          return c || (a.name || "").localeCompare(b.name || "", "en-CA");
+        }
+        // newest faved
+        const ta = Date.parse(a._fave.favedAt || 0) || 0;
+        const tb = Date.parse(b._fave.favedAt || 0) || 0;
+        return tb - ta;
+      });
+      return copy;
+    }
+
+    function render() {
+      let list = favedProducts()
+        .filter(matchesTheme)
+        .filter(matchesLineage)
+        .filter(matchesStatus);
+      list = sortList(list);
+
+      const root = document.getElementById("fave-list");
+      const totalFaved = Object.keys(loadFaves()).length;
+      document.getElementById("list-count").textContent = String(list.length);
+      refreshCount();
+
+      if (!totalFaved) {
+        root.innerHTML = emptyHTML();
+        return;
+      }
+      if (!list.length) {
+        root.innerHTML = `<div class="empty"><p>Nothing in this filter. Loosen kit, lineage, or status.</p></div>`;
+        return;
+      }
+
+      root.innerHTML = list.map(rowHTML).join("");
+      bindRows(root);
+    }
+
+    function bindRows(root) {
+      root.querySelectorAll("[data-unfave]").forEach((el) => {
+        el.addEventListener("click", () => {
+          const id = el.getAttribute("data-unfave");
+          toggleFave(id, false);
+          toast("Unfaved");
+          render();
+        });
+      });
+      root.querySelectorAll("[data-note]").forEach((el) => {
+        el.addEventListener("input", () => {
+          const id = el.getAttribute("data-note");
+          clearTimeout(noteTimers[id]);
+          noteTimers[id] = setTimeout(() => {
+            setNote(id, el.value);
+          }, 280);
+        });
+        el.addEventListener("blur", () => {
+          const id = el.getAttribute("data-note");
+          clearTimeout(noteTimers[id]);
+          setNote(id, el.value);
+        });
+      });
+    }
+
+    function exportFaves() {
+      const faves = loadFaves();
+      const byId = Object.fromEntries(products.map((p) => [p.id, p]));
+      const items = Object.keys(faves).map((id) => {
+        const p = byId[id];
+        const meta = faves[id];
+        return {
+          id,
+          sku: p ? p.sku : null,
+          name: p ? p.name : null,
+          price: p ? p.price : null,
+          currency: "CAD",
+          theme: p ? p.theme : null,
+          mash: p ? p.mash : null,
+          lineage: p ? (p.parentKeeper || p.lineage || null) : null,
+          image: p ? p.image : null,
+          favedAt: meta.favedAt,
+          note: meta.note || "",
+          missingFromCatalog: !p
+        };
+      });
+      items.sort((a, b) => Date.parse(b.favedAt || 0) - Date.parse(a.favedAt || 0));
+      const blob = new Blob([JSON.stringify({
+        project: "cache.north wear — personal faves",
+        key: LS_FAVES,
+        count: items.length,
+        exportedAt: new Date().toISOString(),
+        faves: items
+      }, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "cache-north-faves-" + new Date().toISOString().slice(0, 10) + ".json";
+      a.click();
+      URL.revokeObjectURL(a.href);
+      toast(items.length ? `Exported ${items.length} faves` : "Exported empty faves set");
+    }
+
+    function importFavesFile(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const data = JSON.parse(reader.result);
+          let incoming = {};
+          if (Array.isArray(data.faves)) {
+            data.faves.forEach((item) => {
+              if (!item || !item.id) return;
+              incoming[item.id] = {
+                favedAt: item.favedAt || new Date().toISOString(),
+                note: typeof item.note === "string" ? item.note : ""
+              };
+            });
+          } else if (data.faves && typeof data.faves === "object" && !Array.isArray(data.faves)) {
+            incoming = data.faves;
+          } else if (data && typeof data === "object" && !data.project) {
+            incoming = data;
+          } else {
+            throw new Error("Unrecognized faves JSON shape");
+          }
+          const normalized = {};
+          Object.keys(incoming).forEach((id) => {
+            const entry = incoming[id];
+            if (entry === true || entry === 1) {
+              normalized[id] = { favedAt: new Date().toISOString(), note: "" };
+            } else if (entry && typeof entry === "object") {
+              normalized[id] = {
+                favedAt: entry.favedAt || new Date().toISOString(),
+                note: typeof entry.note === "string" ? entry.note : ""
+              };
+            }
+          });
+          const n = Object.keys(normalized).length;
+          if (!n) {
+            toast("Import empty · nothing to add");
+            return;
+          }
+          const mode = prompt(
+            `Import ${n} fave(s).\nType merge or replace`,
+            "merge"
+          );
+          if (mode === null) {
+            toast("Import cancelled");
+            return;
+          }
+          const action = String(mode).trim().toLowerCase();
+          if (action === "replace") {
+            saveFaves(normalized);
+            toast(`Replaced · ${n} faves`);
+          } else {
+            const current = loadFaves();
+            Object.assign(current, normalized);
+            saveFaves(current);
+            toast(`Merged · ${Object.keys(current).length} faves`);
+          }
+          render();
+        } catch (err) {
+          toast("Import failed · bad JSON");
+          console.error(err);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function clearFaves() {
+      if (!confirm("Clear all personal faves? This cannot be undone (export first if you care).")) {
+        return;
+      }
+      localStorage.removeItem(LS_FAVES);
+      localStorage.setItem(LS_FAVES_UPDATED, new Date().toISOString());
+      pushFavesToDisk({});
+      toast("Faves cleared");
+      render();
+    }
+
+    document.querySelectorAll("[data-theme]").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        themeFilter = chip.getAttribute("data-theme");
+        document.querySelectorAll("[data-theme]").forEach((c) =>
+          c.classList.toggle("on", c === chip)
+        );
+        render();
+      });
+    });
+    document.querySelectorAll("[data-lineage]").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        lineageFilter = chip.getAttribute("data-lineage");
+        document.querySelectorAll("[data-lineage]").forEach((c) =>
+          c.classList.toggle("on", c === chip)
+        );
+        render();
+      });
+    });
+    document.querySelectorAll("[data-status]").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        statusFilter = chip.getAttribute("data-status");
+        document.querySelectorAll("[data-status]").forEach((c) =>
+          c.classList.toggle("on", c === chip)
+        );
+        render();
+      });
+    });
+    document.getElementById("sort-select").addEventListener("change", (e) => {
+      sortBy = e.target.value;
+      render();
+    });
+    document.getElementById("btn-export").addEventListener("click", exportFaves);
+    document.getElementById("btn-import").addEventListener("click", () => {
+      document.getElementById("import-file").click();
+    });
+    document.getElementById("import-file").addEventListener("change", (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (file) importFavesFile(file);
+      e.target.value = "";
+    });
+    document.getElementById("btn-clear").addEventListener("click", clearFaves);
+
+    fetch("./catalog.json?v=20260914-niche")
+      .then((r) => r.json())
+      .then(async (data) => {
+        products = (data.products || []).map((p) => ({
+          ...p,
+          kit: p.kit || p.theme || null
+        }));
+        await hydrateFavesFromDisk();
+        render();
+      })
+      .catch(() => {
+        document.getElementById("fave-list").innerHTML =
+          `<div class="empty"><p>Could not load catalog.json</p></div>`;
+      });
+  </script>
+</body>
+</html>

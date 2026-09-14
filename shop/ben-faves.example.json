@@ -1,0 +1,5 @@
+{
+  "updated": null,
+  "faves": {},
+  "note": "Localhost-only Ben faves. Gitignored when populated; agents read shop/ben-faves.json on disk."
+}

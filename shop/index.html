@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wear · cache.north</title>
+  <meta name="description" content="Northern wear ideas. Idea bag only — not for sale yet." />
+  <meta name="theme-color" content="#0A0C0E" />
+  <link rel="icon" href="../assets/mark.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --void: #0A0C0E;
+      --panel: #12161B;
+      --steel: #C5CCD3;
+      --steel-dim: #7A848E;
+      --snow: #F2F4F6;
+      --navy: #1B2836;
+      --moss: #2A3D32;
+      --led: #E02020;
+      --font: "Space Grotesk", system-ui, sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--void);
+      color: var(--snow);
+      font-family: var(--font);
+      font-size: 1rem;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100svh;
+    }
+    a { color: inherit; text-decoration: none; }
+    a:hover { opacity: 0.85; }
+    img { display: block; max-width: 100%; }
+    button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+    .bar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1.25rem;
+      background: rgba(10, 12, 14, 0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(197, 204, 211, 0.12);
+    }
+    .bar-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      font-size: 0.95rem;
+    }
+    .bar-brand svg { width: 18px; height: 18px; color: var(--snow); }
+    .bar-nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+    }
+    .bar-nav a:hover { color: var(--snow); opacity: 1; }
+    .bar-nav .active { color: var(--snow); }
+    .bag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.65rem;
+      border: 1px solid rgba(242, 244, 246, 0.28);
+      color: var(--snow);
+    }
+    .bag-pill .n {
+      color: var(--led);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 2.5rem));
+      margin: 0 auto;
+      padding: 2rem 0 5rem;
+    }
+
+    .hero {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(197, 204, 211, 0.14);
+    }
+    .kicker {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--led);
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 600;
+      letter-spacing: -0.045em;
+      line-height: 1.05;
+    }
+    .hero h1 .led {
+      display: inline-block;
+      width: 0.12em;
+      height: 0.12em;
+      margin: 0 0.02em 0.1em;
+      border-radius: 50%;
+      background: var(--led);
+      box-shadow: 0 0 12px rgba(224, 32, 32, 0.55);
+      vertical-align: middle;
+    }
+    .hero p {
+      max-width: 36rem;
+      color: var(--steel);
+      font-size: 1.02rem;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+    .toolbar-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      align-items: center;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      flex: 1;
+      align-items: center;
+    }
+    .filter-label {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+      margin-right: 0.15rem;
+    }
+    .chip {
+      padding: 0.45rem 0.7rem;
+      border: 1px solid rgba(197, 204, 211, 0.22);
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .chip:hover, .chip.on {
+      color: var(--snow);
+      border-color: var(--snow);
+    }
+    .chip.on { background: rgba(242, 244, 246, 0.08); }
+    .actions { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: center; }
+    .empty-actions { margin-top: 0.85rem; display: flex; justify-content: center; gap: 0.5rem; }
+    .filter-meta {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.7rem 0.95rem;
+      background: var(--snow);
+      color: var(--void);
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--snow);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--snow);
+      border-color: rgba(242, 244, 246, 0.28);
+    }
+    .btn-ghost:hover { border-color: var(--snow); }
+    .btn-led {
+      background: transparent;
+      color: var(--led);
+      border-color: rgba(224, 32, 32, 0.55);
+    }
+    .btn-led:hover { border-color: var(--led); background: rgba(224, 32, 32, 0.08); }
+    .btn-sm { padding: 0.45rem 0.65rem; font-size: 0.58rem; }
+
+    .shelf-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+      margin: 0 0 0.85rem;
+    }
+    .shelf-label .count {
+      color: var(--led);
+      margin-left: 0.4rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .grid.featured {
+      margin-bottom: 2.25rem;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(197, 204, 211, 0.12);
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: rgba(197, 204, 211, 0.35); }
+    .card.promoted { border-color: rgba(224, 32, 32, 0.35); }
+    .card.faved { box-shadow: inset 0 0 0 1px rgba(224, 32, 32, 0.22); }
+    .btn-fave.on {
+      color: var(--led);
+      border-color: rgba(224, 32, 32, 0.55);
+      background: rgba(224, 32, 32, 0.08);
+    }
+    .card-media {
+      aspect-ratio: 1;
+      background: var(--navy);
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 1rem 1rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      flex: 1;
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+    .sku {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+    }
+    .status {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.4rem;
+      border: 1px solid rgba(197, 204, 211, 0.25);
+      color: var(--steel-dim);
+      white-space: nowrap;
+    }
+    .status.promoted {
+      color: var(--led);
+      border-color: rgba(224, 32, 32, 0.5);
+    }
+    .status.archived { opacity: 0.55; }
+    .card h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      cursor: pointer;
+    }
+    .card h3:hover { opacity: 0.85; }
+    .blurb {
+      color: var(--steel);
+      font-size: 0.9rem;
+      flex: 1;
+    }
+    .mash {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      line-height: 1.45;
+      color: var(--steel-dim);
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-top: 0.25rem;
+    }
+    .price {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+    }
+    .theme {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+    }
+    .card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.65rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(197, 204, 211, 0.1);
+    }
+
+    .empty {
+      padding: 2rem 1rem;
+      border: 1px dashed rgba(197, 204, 211, 0.2);
+      color: var(--steel-dim);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: rgba(10, 12, 14, 0.78);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      width: min(920px, 100%);
+      max-height: calc(100svh - 2.5rem);
+      overflow: auto;
+      background: var(--panel);
+      border: 1px solid rgba(197, 204, 211, 0.2);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 760px) {
+      .modal { grid-template-columns: 1fr; }
+    }
+    .modal-media {
+      background: var(--navy);
+      min-height: 280px;
+    }
+    .modal-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .modal-body {
+      padding: 1.35rem 1.35rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .modal-close {
+      align-self: flex-end;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+      padding: 0.3rem 0.45rem;
+      border: 1px solid rgba(197, 204, 211, 0.2);
+    }
+    .modal-close:hover { color: var(--snow); border-color: var(--snow); }
+    .modal h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 600;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+    }
+    .sizes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+    .size {
+      min-width: 2.6rem;
+      padding: 0.45rem 0.55rem;
+      text-align: center;
+      border: 1px solid rgba(197, 204, 211, 0.22);
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      color: var(--steel);
+    }
+    .size.on, .size:hover {
+      border-color: var(--snow);
+      color: var(--snow);
+    }
+    .check {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      font-size: 0.85rem;
+      color: var(--steel);
+      cursor: pointer;
+    }
+    .check input { margin-top: 0.2rem; accent-color: var(--led); }
+
+    .toast {
+      position: fixed;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      z-index: 80;
+      padding: 0.85rem 1.1rem;
+      background: var(--snow);
+      color: var(--void);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: transform 0.25s ease;
+      pointer-events: none;
+      max-width: calc(100% - 2rem);
+      text-align: center;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    .note {
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(197, 204, 211, 0.12);
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      color: var(--steel-dim);
+      line-height: 1.6;
+    }
+
+    /* Niche · quieter shelf below core kit */
+    .niche-block {
+      margin-top: 3.25rem;
+      padding-top: 1.35rem;
+      border-top: 1px dashed rgba(197, 204, 211, 0.14);
+      opacity: 0.72;
+    }
+    .niche-block[open] { opacity: 0.88; }
+    .niche-summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.55rem 1rem;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+      padding: 0.35rem 0;
+      user-select: none;
+    }
+    .niche-summary::-webkit-details-marker { display: none; }
+    .niche-summary::before {
+      content: "+";
+      display: inline-block;
+      width: 0.9rem;
+      color: var(--steel-dim);
+      font-weight: 500;
+    }
+    .niche-block[open] .niche-summary::before { content: "–"; }
+    .niche-summary:hover { color: var(--snow); }
+    .niche-summary .niche-title { color: var(--steel-dim); font-weight: 500; }
+    .niche-summary .niche-hint { opacity: 0.75; letter-spacing: 0.08em; }
+    .niche-summary .count { color: var(--steel-dim); margin-left: 0; }
+    .niche-inner {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .niche-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      align-items: center;
+    }
+    .niche-filters .chip {
+      padding: 0.35rem 0.55rem;
+      font-size: 0.55rem;
+      border-color: rgba(197, 204, 211, 0.16);
+      color: var(--steel-dim);
+    }
+    .niche-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.75rem;
+    }
+    .niche-grid .card {
+      border-color: rgba(197, 204, 211, 0.08);
+      background: rgba(18, 22, 27, 0.65);
+    }
+    .niche-grid .card h3 { font-size: 1rem; }
+    .niche-grid .blurb { font-size: 0.82rem; }
+    .badge-niche {
+      font-family: var(--mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.35rem;
+      border: 1px solid rgba(197, 204, 211, 0.2);
+      color: var(--steel-dim);
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <a class="bar-brand" href="../">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><path fill="currentColor" d="M50 6.5 L54.5 22 62 10.5 61.5 26.5 76 18.5 69.5 32.5 86 33.5 72.5 44.5 85 55.5 67.5 55 72 70.5 56.5 62.5 57.5 79.5 50 70.5 V93.5 H47.5 V70.5 L40 79.5 41 62.5 25.5 70.5 30 55 12.5 55.5 25 44.5 11.5 33.5 28 32.5 21.5 18.5 36 26.5 35.5 10.5 43 22 Z"/></svg>
+      cache.north
+    </a>
+    <nav class="bar-nav">
+      <a href="../">Muster</a>
+      <a class="active" href="./">Wear · Kit</a>
+      <a href="./faves.html">Extras · Faves</a>
+      <span class="bag-pill" id="bag-pill" title="Idea bag only">Bag <span class="n" id="bag-count">0</span></span>
+    </nav>
+  </header>
+
+  <div class="wrap">
+    <section class="hero">
+      <p class="kicker">Pretend storefront · CAD · not for sale</p>
+      <h1>Northern wear<span class="led" aria-hidden="true"></span></h1>
+      <p>
+        Fake shop for cache.north kit ideas. Browse like a store, heart personal faves,
+        bag what you like, promote keepers to the homepage strip. No checkout.
+        Prices are idea markers only.
+      </p>
+    </section>
+
+    <div class="toolbar">
+      <div class="toolbar-row">
+        <div class="filters" role="tablist" aria-label="Filter by status">
+          <span class="filter-label">Status</span>
+          <button type="button" class="chip on" data-filter="all">All</button>
+          <button type="button" class="chip" data-filter="promoted">Promoted</button>
+          <button type="button" class="chip" data-filter="idea">Ideas</button>
+          <button type="button" class="chip" data-filter="archived">Archived</button>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-ghost" id="btn-export">Export promoted JSON</button>
+          <button type="button" class="btn btn-ghost" id="btn-reset">Reset promotes</button>
+        </div>
+      </div>
+      <div class="toolbar-row">
+        <div class="filters" role="tablist" aria-label="Filter by kit type">
+          <span class="filter-label">Kit</span>
+          <button type="button" class="chip on" data-theme="all">All</button>
+          <button type="button" class="chip" data-theme="boots">Boots</button>
+          <button type="button" class="chip" data-theme="gumsole">Gumsole</button>
+          <button type="button" class="chip" data-theme="shells">Shells</button>
+          <button type="button" class="chip" data-theme="gaiters">Gaiters</button>
+          <button type="button" class="chip" data-theme="overboots">Overboots</button>
+          <button type="button" class="chip" data-theme="footwear">Footwear</button>
+          <button type="button" class="chip" data-theme="mitts">Mitts</button>
+          <button type="button" class="chip" data-theme="hat">Hats</button>
+          <button type="button" class="chip" data-theme="eyewear">Eyewear</button>
+          <button type="button" class="chip" data-theme="protection">Wind leather</button>
+        </div>
+      </div>
+      <div class="toolbar-row">
+        <div class="filters" role="tablist" aria-label="Filter by parent keeper">
+          <span class="filter-label">Lineage</span>
+          <button type="button" class="chip on" data-lineage="all">All</button>
+          <button type="button" class="chip" data-lineage="v4-021">021 Strap</button>
+          <button type="button" class="chip" data-lineage="v4-027">027 Gaunt</button>
+          <button type="button" class="chip" data-lineage="v4-034">034 Point</button>
+          <button type="button" class="chip" data-lineage="extras">Extras kit</button>
+          <button type="button" class="chip" data-lineage="earlier">Earlier</button>
+        </div>
+      </div>
+      <div class="toolbar-row">
+        <div class="filters" role="tablist" aria-label="Sort catalogue">
+          <span class="filter-label">Sort</span>
+          <button type="button" class="chip on" data-sort="newest">Newest</button>
+          <button type="button" class="chip" data-sort="oldest">Oldest</button>
+        </div>
+        <div class="actions">
+          <span class="filter-meta" id="filter-summary">Showing all</span>
+          <button type="button" class="btn btn-ghost" id="btn-clear-filters">Clear filters</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="shelf-label">Promoted shelf <span class="count" id="promoted-count">0</span></p>
+    <div class="grid featured" id="featured-grid"></div>
+
+    <p class="shelf-label">Full catalogue <span class="count" id="all-count">0</span></p>
+    <div class="grid" id="all-grid"></div>
+
+    <details class="niche-block" id="niche-block">
+      <summary class="niche-summary">
+        <span class="niche-title">Niche · not core kit</span>
+        <span class="niche-hint">Skis · masks · quieter shelf</span>
+        <span class="count" id="niche-count">0</span>
+      </summary>
+      <div class="niche-inner">
+        <div class="niche-filters" role="tablist" aria-label="Filter niche by kit">
+          <span class="filter-label">Inside niche</span>
+          <button type="button" class="chip on" data-niche-kit="all">All</button>
+          <button type="button" class="chip" data-niche-kit="mask">Masks</button>
+          <button type="button" class="chip" data-niche-kit="skis">Skis</button>
+        </div>
+        <div class="niche-grid" id="niche-grid"></div>
+      </div>
+    </details>
+
+    <p class="note">
+      Status and homepage-teaser flags save in localStorage
+      (<code>cacheNorth.shop.status</code>, <code>cacheNorth.shop.homepageTeasers</code>).
+      Personal faves · <code>cacheNorth.shop.faves</code> · see
+      <a href="./faves.html">Extras · Faves</a>.
+      Catalogue source of truth · <code>catalog.json</code>. See README.
+      <span id="disk-sync-status" hidden></span>
+    </p>
+  </div>
+
+  <div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal">
+      <div class="modal-media"><img id="modal-img" alt="" /></div>
+      <div class="modal-body">
+        <button type="button" class="modal-close" id="modal-close">Close</button>
+        <p class="sku" id="modal-sku"></p>
+        <h2 id="modal-title"></h2>
+        <p class="blurb" id="modal-blurb"></p>
+        <p class="mash" id="modal-mash"></p>
+        <p class="mash" id="modal-materials"></p>
+        <p class="price" id="modal-price"></p>
+        <div>
+          <p class="shelf-label" style="margin-bottom:0.5rem">Size</p>
+          <div class="sizes" id="modal-sizes"></div>
+        </div>
+        <div class="card-actions" id="modal-actions"></div>
+        <button type="button" class="btn" id="modal-bag">Add to bag</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const LS_STATUS = "cacheNorth.shop.status";
+    const LS_TEASER = "cacheNorth.shop.homepageTeasers";
+    const LS_BAG = "cacheNorth.shop.bag";
+    const LS_FAVES = "cacheNorth.shop.faves";
+    const LS_FAVES_UPDATED = "cacheNorth.shop.favesUpdated";
+    const FAVES_API = "/api/faves";
+    const VALID = new Set(["idea", "promoted", "archived"]);
+
+    let catalog = null;
+    let products = [];
+    let filter = "all";
+    let themeFilter = "all";
+    let lineageFilter = "all";
+    let sortOrder = "newest";
+    let nicheKitFilter = "all";
+    let selectedSize = null;
+    let activeId = null;
+    let diskSyncOk = null;
+    const CATALOG_CACHE_BUST = "20260914-niche";
+
+    function isLocalHost() {
+      const h = location.hostname;
+      return h === "localhost" || h === "127.0.0.1" || h === "[::1]";
+    }
+
+    function setDiskSyncStatus(ok, detail) {
+      diskSyncOk = ok;
+      const el = document.getElementById("disk-sync-status");
+      if (!el) return;
+      if (!isLocalHost()) {
+        el.hidden = true;
+        return;
+      }
+      el.hidden = false;
+      el.textContent = ok ? (detail || " · disk sync on") : " · disk sync off";
+    }
+
+    function coreFavesMap(map) {
+      const out = {};
+      Object.keys(map || {}).forEach((id) => {
+        const entry = map[id];
+        if (!entry || typeof entry !== "object") return;
+        out[id] = {
+          favedAt: entry.favedAt || new Date().toISOString(),
+          note: typeof entry.note === "string" ? entry.note : ""
+        };
+      });
+      return out;
+    }
+
+    function parseTs(s) {
+      const t = Date.parse(s || "");
+      return Number.isFinite(t) ? t : 0;
+    }
+
+    function mergeFaveMaps(a, b) {
+      const out = { ...coreFavesMap(a) };
+      Object.keys(coreFavesMap(b)).forEach((id) => {
+        const other = b[id];
+        if (!out[id]) {
+          out[id] = other;
+          return;
+        }
+        const cur = out[id];
+        if (parseTs(other.favedAt) >= parseTs(cur.favedAt)) {
+          out[id] = {
+            favedAt: other.favedAt || cur.favedAt,
+            note: (other.note && other.note.length) ? other.note : (cur.note || "")
+          };
+        } else if ((!cur.note || !cur.note.length) && other.note) {
+          out[id] = { ...cur, note: other.note };
+        }
+      });
+      return out;
+    }
+
+    async function pushFavesToDisk(map) {
+      if (!isLocalHost()) return;
+      try {
+        const res = await fetch(FAVES_API, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ faves: coreFavesMap(map) })
+        });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+        if (data && data.updated) {
+          localStorage.setItem(LS_FAVES_UPDATED, data.updated);
+        } else {
+          localStorage.setItem(LS_FAVES_UPDATED, new Date().toISOString());
+        }
+        setDiskSyncStatus(true);
+      } catch (err) {
+        console.warn("faves disk sync failed", err);
+        setDiskSyncStatus(false);
+      }
+    }
+
+    async function hydrateFavesFromDisk() {
+      if (!isLocalHost()) return;
+      try {
+        const res = await fetch(FAVES_API, { cache: "no-store" });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+        const diskFaves = coreFavesMap((data && data.faves) || {});
+        const diskUpdated = (data && data.updated) || "";
+        const lsUpdated = localStorage.getItem(LS_FAVES_UPDATED) || "";
+        const lsFaves = loadFaves();
+        let merged;
+        if (parseTs(diskUpdated) >= parseTs(lsUpdated) && Object.keys(diskFaves).length) {
+          merged = mergeFaveMaps(diskFaves, lsFaves);
+        } else if (Object.keys(diskFaves).length) {
+          merged = mergeFaveMaps(lsFaves, diskFaves);
+        } else {
+          merged = lsFaves;
+        }
+        saveMap(LS_FAVES, merged);
+        const newest = parseTs(diskUpdated) >= parseTs(lsUpdated) ? diskUpdated : (lsUpdated || diskUpdated);
+        if (newest) localStorage.setItem(LS_FAVES_UPDATED, newest);
+        setDiskSyncStatus(true);
+        // If LS had extras or we merged, push so disk matches
+        await pushFavesToDisk(merged);
+      } catch (err) {
+        console.warn("faves disk hydrate failed", err);
+        setDiskSyncStatus(false);
+      }
+    }
+
+    function loadBag() {
+      try {
+        const bag = JSON.parse(localStorage.getItem(LS_BAG) || "[]");
+        return Array.isArray(bag) ? bag : [];
+      } catch { return []; }
+    }
+    function saveBag(bag) {
+      localStorage.setItem(LS_BAG, JSON.stringify(bag));
+      const n = document.getElementById("bag-count");
+      if (n) n.textContent = String(bag.length);
+    }
+    function refreshBagCount() {
+      const n = document.getElementById("bag-count");
+      if (n) n.textContent = String(loadBag().length);
+    }
+
+    function loadMap(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "{}") || {}; }
+      catch { return {}; }
+    }
+    function saveMap(key, map) {
+      localStorage.setItem(key, JSON.stringify(map));
+    }
+
+    function resolveStatus(p) {
+      const map = loadMap(LS_STATUS);
+      if (map[p.id] && VALID.has(map[p.id])) return map[p.id];
+      return p.status || "idea";
+    }
+
+    function resolveTeaser(p) {
+      const map = loadMap(LS_TEASER);
+      if (Object.prototype.hasOwnProperty.call(map, p.id)) return !!map[p.id];
+      return !!p.homepageTeaser;
+    }
+
+    function setStatus(id, status) {
+      const map = loadMap(LS_STATUS);
+      map[id] = status;
+      saveMap(LS_STATUS, map);
+    }
+
+    function setTeaser(id, on) {
+      const map = loadMap(LS_TEASER);
+      map[id] = !!on;
+      saveMap(LS_TEASER, map);
+    }
+
+    function loadFaves() {
+      const raw = loadMap(LS_FAVES);
+      const out = {};
+      Object.keys(raw).forEach((id) => {
+        const entry = raw[id];
+        if (entry === true || entry === 1) {
+          out[id] = { favedAt: new Date().toISOString(), note: "" };
+        } else if (entry && typeof entry === "object") {
+          out[id] = {
+            favedAt: entry.favedAt || new Date().toISOString(),
+            note: typeof entry.note === "string" ? entry.note : ""
+          };
+        }
+      });
+      return out;
+    }
+
+    function isFaved(id) {
+      return Object.prototype.hasOwnProperty.call(loadFaves(), id);
+    }
+
+    function setFave(id, on) {
+      const map = loadFaves();
+      if (on) {
+        if (!map[id]) map[id] = { favedAt: new Date().toISOString(), note: "" };
+      } else {
+        delete map[id];
+      }
+      saveMap(LS_FAVES, map);
+      localStorage.setItem(LS_FAVES_UPDATED, new Date().toISOString());
+      pushFavesToDisk(map);
+    }
+
+    function money(n) {
+      return new Intl.NumberFormat("en-CA", {
+        style: "currency",
+        currency: "CAD",
+        maximumFractionDigits: 0
+      }).format(n);
+    }
+
+    function toast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => el.classList.remove("show"), 2600);
+    }
+
+    function cardHTML(p) {
+      const status = resolveStatus(p);
+      const teaser = resolveTeaser(p);
+      const faved = isFaved(p.id);
+      const niche = isNiche(p);
+      return `
+        <article class="card ${status}${faved ? " faved" : ""}" data-id="${p.id}">
+          <div class="card-media" data-open="${p.id}">
+            <img src="${p.image}" alt="${escapeAttr(p.name)}" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <div class="card-top">
+              <span class="sku">${escapeHtml(p.sku)}</span>
+              <span style="display:flex;gap:0.3rem;flex-wrap:wrap;justify-content:flex-end">
+                ${niche ? `<span class="badge-niche">Niche</span>` : ""}
+                <span class="status ${status}">${status}</span>
+              </span>
+            </div>
+            <h3 data-open="${p.id}">${escapeHtml(p.name)}</h3>
+            <p class="blurb">${escapeHtml(p.blurb)}</p>
+            <p class="mash">Mash · ${escapeHtml(p.mash)}</p>
+            <div class="price-row">
+              <span class="price">${money(p.price)}</span>
+              <span class="theme">${escapeHtml(p.theme)}</span>
+            </div>
+            <div class="card-actions">
+              <button type="button" class="btn btn-ghost btn-sm btn-fave${faved ? " on" : ""}" data-fave="${p.id}" data-on="${faved ? "1" : "0"}" aria-pressed="${faved ? "true" : "false"}" title="${faved ? "Remove fave" : "Add to faves"}">
+                ${faved ? "♥ Faved" : "♡ Fave"}
+              </button>
+              ${status === "promoted"
+                ? `<button type="button" class="btn btn-ghost btn-sm" data-demote="${p.id}">Demote</button>`
+                : `<button type="button" class="btn btn-led btn-sm" data-promote="${p.id}">Promote</button>`}
+              ${status !== "archived"
+                ? `<button type="button" class="btn btn-ghost btn-sm" data-archive="${p.id}">Archive</button>`
+                : `<button type="button" class="btn btn-ghost btn-sm" data-idea="${p.id}">Restore idea</button>`}
+              <button type="button" class="btn btn-ghost btn-sm" data-teaser="${p.id}" data-on="${teaser ? "1" : "0"}">
+                ${teaser ? "Teaser on" : "Teaser off"}
+              </button>
+            </div>
+          </div>
+        </article>`;
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+    function escapeAttr(s) { return escapeHtml(s); }
+
+    function enriched() {
+      return products.map((p) => ({
+        ...p,
+        _status: resolveStatus(p),
+        _teaser: resolveTeaser(p)
+      }));
+    }
+
+    function kitOf(p) {
+      return String(p.kit || p.theme || "").toLowerCase();
+    }
+
+    function isNiche(p) {
+      return p.section === "niche" || p.niche === true;
+    }
+
+    function isGumsole(p) {
+      const id = String(p.id || "");
+      return kitOf(p) === "gumsole" || id.startsWith("v7-gs") ||
+        /gumsole/i.test(p.name || "") || /gumsole/i.test(p.sku || "");
+    }
+
+    function matchesTheme(p) {
+      if (themeFilter === "all") return true;
+      const theme = String(p.theme || "").toLowerCase();
+      const kit = kitOf(p);
+      if (themeFilter === "gaiters") {
+        return theme === "gaiters" || kit === "gaiters" || !!p.gaiter;
+      }
+      if (themeFilter === "gumsole") {
+        return isGumsole(p);
+      }
+      if (themeFilter === "boots") {
+        return theme === "boots" || kit === "boots" || isGumsole(p);
+      }
+      return theme === themeFilter || kit === themeFilter;
+    }
+
+    function matchesLineage(p) {
+      if (lineageFilter === "all") return true;
+      const id = String(p.id || "");
+      if (lineageFilter === "extras") {
+        return (p.lineage === "extras") || id.startsWith("v6-") ||
+          (id.startsWith("v7-") && !id.startsWith("v7-gs") &&
+            (p.kit === "hat" || p.kit === "mask" || p.kit === "eyewear" ||
+              p.kit === "protection" || p.kit === "skis" || p.theme === "hat" ||
+              p.theme === "mask" || p.theme === "eyewear" || p.theme === "protection" ||
+              p.theme === "skis"));
+      }
+      if (lineageFilter === "earlier") {
+        return !p.parentKeeper && !id.startsWith("v5-") &&
+          !id.startsWith("v6-") &&
+          !id.startsWith("v7-") &&
+          p.lineage !== "extras" &&
+          !["v4-021", "v4-027", "v4-034"].includes(p.id);
+      }
+      if (p.id === lineageFilter) return true;
+      return (p.parentKeeper || p.lineage) === lineageFilter;
+    }
+
+    function addedStamp(p) {
+      if (p.addedAt) return Date.parse(p.addedAt) || 0;
+      if (p.createdAt) return Date.parse(p.createdAt) || 0;
+      const idx = Number.isFinite(p.catalogIndex) ? p.catalogIndex : 0;
+      return idx;
+    }
+
+    function sortProducts(list) {
+      const dir = sortOrder === "oldest" ? 1 : -1;
+      return list.slice().sort((a, b) => {
+        const d = addedStamp(a) - addedStamp(b);
+        if (d !== 0) return d * dir;
+        return String(a.id || "").localeCompare(String(b.id || "")) * dir;
+      });
+    }
+
+    function clearFilters() {
+      filter = "all";
+      themeFilter = "all";
+      lineageFilter = "all";
+      document.querySelectorAll("[data-filter]").forEach((c) =>
+        c.classList.toggle("on", c.getAttribute("data-filter") === "all")
+      );
+      document.querySelectorAll("[data-theme]").forEach((c) =>
+        c.classList.toggle("on", c.getAttribute("data-theme") === "all")
+      );
+      document.querySelectorAll("[data-lineage]").forEach((c) =>
+        c.classList.toggle("on", c.getAttribute("data-lineage") === "all")
+      );
+      render();
+    }
+
+    function emptyStateHTML() {
+      return `<div class="empty">
+        <p>0 match — clear filters</p>
+        <div class="empty-actions">
+          <button type="button" class="btn btn-ghost" data-clear-filters>Clear filters</button>
+        </div>
+      </div>`;
+    }
+
+    function render() {
+      const list = enriched();
+      const core = list.filter((p) => !isNiche(p));
+      const nicheAll = list.filter(isNiche);
+      const promoted = sortProducts(core.filter((p) => p._status === "promoted"));
+      let visible = filter === "all" ? core : core.filter((p) => p._status === filter);
+      visible = sortProducts(visible.filter(matchesTheme).filter(matchesLineage));
+
+      let nicheVisible = nicheAll.filter(matchesLineage);
+      if (filter !== "all") {
+        nicheVisible = nicheVisible.filter((p) => p._status === filter);
+      }
+      if (nicheKitFilter !== "all") {
+        nicheVisible = nicheVisible.filter((p) => {
+          const kit = kitOf(p);
+          const theme = String(p.theme || "").toLowerCase();
+          return kit === nicheKitFilter || theme === nicheKitFilter;
+        });
+      }
+      nicheVisible = sortProducts(nicheVisible);
+
+      const feat = document.getElementById("featured-grid");
+      const all = document.getElementById("all-grid");
+      const nicheGrid = document.getElementById("niche-grid");
+      document.getElementById("promoted-count").textContent = String(promoted.length);
+      document.getElementById("all-count").textContent = String(visible.length);
+      const nicheCountEl = document.getElementById("niche-count");
+      if (nicheCountEl) nicheCountEl.textContent = String(nicheVisible.length);
+
+      const summary = document.getElementById("filter-summary");
+      if (summary) {
+        const bits = [];
+        if (filter !== "all") bits.push(filter);
+        if (themeFilter !== "all") bits.push(themeFilter);
+        if (lineageFilter !== "all") bits.push(lineageFilter);
+        summary.textContent = bits.length
+          ? `${visible.length} core · ${bits.join(" · ")}`
+          : `Showing ${visible.length} core · ${sortOrder}`;
+      }
+
+      feat.innerHTML = promoted.length
+        ? promoted.map(cardHTML).join("")
+        : `<div class="empty">No promoted ideas yet. Hit Promote on something that hits.</div>`;
+      all.innerHTML = visible.length
+        ? visible.map(cardHTML).join("")
+        : emptyStateHTML();
+      if (nicheGrid) {
+        nicheGrid.innerHTML = nicheVisible.length
+          ? nicheVisible.map(cardHTML).join("")
+          : `<div class="empty">No niche matches</div>`;
+        bindCards(nicheGrid);
+      }
+
+      bindCards(feat);
+      bindCards(all);
+      document.querySelectorAll("[data-clear-filters]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          clearFilters();
+        });
+      });
+    }
+
+    function bindCards(root) {
+      root.querySelectorAll("[data-open]").forEach((el) => {
+        el.addEventListener("click", () => openModal(el.getAttribute("data-open")));
+      });
+      root.querySelectorAll("[data-promote]").forEach((el) => {
+        el.addEventListener("click", (e) => {
+          e.stopPropagation();
+          setStatus(el.getAttribute("data-promote"), "promoted");
+          toast("Promoted");
+          render();
+          if (activeId) syncModalActions();
+        });
+      });
+      root.querySelectorAll("[data-demote]").forEach((el) => {
+        el.addEventListener("click", (e) => {
+          e.stopPropagation();
+          setStatus(el.getAttribute("data-demote"), "idea");
+          toast("Demoted to idea");
+          render();
+          if (activeId) syncModalActions();
+        });
+      });
+      root.querySelectorAll("[data-archive]").forEach((el) => {
+        el.addEventListener("click", (e) => {
+          e.stopPropagation();
+          setStatus(el.getAttribute("data-archive"), "archived");
+          toast("Archived");
+          render();
+        });
+      });
+      root.querySelectorAll("[data-idea]").forEach((el) => {
+        el.addEventListener("click", (e) => {
+          e.stopPropagation();
+          setStatus(el.getAttribute("data-idea"), "idea");
+          toast("Restored as idea");
+          render();
+        });
+      });
+      root.querySelectorAll("[data-teaser]").forEach((el) => {
+        el.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const id = el.getAttribute("data-teaser");
+          const next = el.getAttribute("data-on") !== "1";
+          setTeaser(id, next);
+          toast(next ? "Homepage teaser on" : "Homepage teaser off");
+          render();
+          if (activeId) syncModalActions();
+        });
+      });
+      root.querySelectorAll("[data-fave]").forEach((el) => {
+        el.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const id = el.getAttribute("data-fave");
+          const next = el.getAttribute("data-on") !== "1";
+          setFave(id, next);
+          toast(next ? "Faved · see Extras" : "Unfaved");
+          render();
+          if (activeId) syncModalActions();
+        });
+      });
+    }
+
+    function findProduct(id) {
+      return products.find((p) => p.id === id);
+    }
+
+    function openModal(id) {
+      const p = findProduct(id);
+      if (!p) return;
+      activeId = id;
+      selectedSize = (p.sizes && p.sizes[0]) || null;
+      document.getElementById("modal-img").src = p.image;
+      document.getElementById("modal-img").alt = p.name;
+      document.getElementById("modal-sku").textContent = p.sku;
+      document.getElementById("modal-title").textContent = p.name;
+      document.getElementById("modal-blurb").textContent = p.blurb;
+      document.getElementById("modal-mash").textContent = "Mash · " + p.mash;
+      document.getElementById("modal-materials").textContent = "Materials · " + p.materials;
+      document.getElementById("modal-price").textContent = money(p.price) + " · idea pricing";
+      const sizes = document.getElementById("modal-sizes");
+      sizes.innerHTML = (p.sizes || []).map((s) =>
+        `<button type="button" class="size${s === selectedSize ? " on" : ""}" data-size="${escapeAttr(s)}">${escapeHtml(s)}</button>`
+      ).join("");
+      sizes.querySelectorAll("[data-size]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          selectedSize = btn.getAttribute("data-size");
+          sizes.querySelectorAll(".size").forEach((b) => b.classList.toggle("on", b === btn));
+        });
+      });
+      syncModalActions();
+      const modal = document.getElementById("modal");
+      modal.hidden = false;
+      modal.classList.add("open");
+      history.replaceState(null, "", "?sku=" + encodeURIComponent(p.sku));
+    }
+
+    function syncModalActions() {
+      if (!activeId) return;
+      const p = findProduct(activeId);
+      if (!p) return;
+      const status = resolveStatus(p);
+      const teaser = resolveTeaser(p);
+      const faved = isFaved(p.id);
+      const box = document.getElementById("modal-actions");
+      box.innerHTML = `
+        <button type="button" class="btn btn-ghost btn-sm btn-fave${faved ? " on" : ""}" data-fave="${p.id}" data-on="${faved ? "1" : "0"}" aria-pressed="${faved ? "true" : "false"}">
+          ${faved ? "♥ Faved" : "♡ Fave"}
+        </button>
+        ${status === "promoted"
+          ? `<button type="button" class="btn btn-ghost btn-sm" data-demote="${p.id}">Demote</button>`
+          : `<button type="button" class="btn btn-led btn-sm" data-promote="${p.id}">Promote</button>`}
+        <label class="check"><input type="checkbox" id="modal-teaser-check" ${teaser ? "checked" : ""} /> Promote to homepage teaser</label>
+        <a class="btn btn-ghost btn-sm" href="./faves.html">Extras · Faves</a>
+      `;
+      bindCards(box);
+      const chk = document.getElementById("modal-teaser-check");
+      if (chk) {
+        chk.addEventListener("change", () => {
+          setTeaser(p.id, chk.checked);
+          toast(chk.checked ? "Homepage teaser on" : "Homepage teaser off");
+          render();
+          syncModalActions();
+        });
+      }
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("modal");
+      modal.classList.remove("open");
+      modal.hidden = true;
+      activeId = null;
+      if (location.search.includes("sku=")) {
+        history.replaceState(null, "", location.pathname);
+      }
+    }
+
+    function exportPromoted() {
+      const list = enriched()
+        .filter((p) => p._status === "promoted")
+        .map((p) => ({
+          id: p.id,
+          sku: p.sku,
+          name: p.name,
+          price: p.price,
+          currency: "CAD",
+          mash: p.mash,
+          materials: p.materials,
+          theme: p.theme,
+          image: p.image,
+          homepageTeaser: p._teaser,
+          benNote: p.benNote || null,
+          exportedAt: new Date().toISOString()
+        }));
+      const blob = new Blob([JSON.stringify({
+        project: "cache.north wear — promoted set",
+        count: list.length,
+        products: list
+      }, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "cache-north-promoted-" + new Date().toISOString().slice(0, 10) + ".json";
+      a.click();
+      URL.revokeObjectURL(a.href);
+      toast(list.length ? `Exported ${list.length} promoted` : "Exported empty promoted set");
+    }
+
+    function resetPromotes() {
+      localStorage.removeItem(LS_STATUS);
+      localStorage.removeItem(LS_TEASER);
+      toast("Reset to catalogue defaults");
+      render();
+    }
+
+    document.querySelectorAll("[data-filter]").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        filter = chip.getAttribute("data-filter");
+        document.querySelectorAll("[data-filter]").forEach((c) =>
+          c.classList.toggle("on", c === chip)
+        );
+        render();
+      });
+    });
+    document.querySelectorAll("[data-theme]").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        themeFilter = chip.getAttribute("data-theme");
+        document.querySelectorAll("[data-theme]").forEach((c) =>
+          c.classList.toggle("on", c === chip)
+        );
+        render();
+      });
+    });
+    document.querySelectorAll("[data-lineage]").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        lineageFilter = chip.getAttribute("data-lineage");
+        document.querySelectorAll("[data-lineage]").forEach((c) =>
+          c.classList.toggle("on", c === chip)
+        );
+        render();
+      });
+    });
+    document.querySelectorAll("[data-sort]").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        sortOrder = chip.getAttribute("data-sort") || "newest";
+        document.querySelectorAll("[data-sort]").forEach((c) =>
+          c.classList.toggle("on", c === chip)
+        );
+        render();
+      });
+    });
+    document.querySelectorAll("[data-niche-kit]").forEach((chip) => {
+      chip.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        nicheKitFilter = chip.getAttribute("data-niche-kit") || "all";
+        document.querySelectorAll("[data-niche-kit]").forEach((c) =>
+          c.classList.toggle("on", c === chip)
+        );
+        render();
+      });
+    });
+    document.getElementById("btn-clear-filters").addEventListener("click", clearFilters);
+    document.getElementById("btn-export").addEventListener("click", exportPromoted);
+    document.getElementById("btn-reset").addEventListener("click", resetPromotes);
+    document.getElementById("modal-close").addEventListener("click", closeModal);
+    document.getElementById("modal").addEventListener("click", (e) => {
+      if (e.target.id === "modal") closeModal();
+    });
+    document.getElementById("modal-bag").addEventListener("click", () => {
+      if (!activeId) return;
+      const p = findProduct(activeId);
+      if (!p) return;
+      const bag = loadBag();
+      bag.push({
+        id: p.id,
+        sku: p.sku,
+        name: p.name,
+        size: selectedSize,
+        price: p.price,
+        at: new Date().toISOString()
+      });
+      saveBag(bag);
+      toast("Added to idea bag · not for sale yet");
+    });
+    document.getElementById("bag-pill").addEventListener("click", () => {
+      const bag = loadBag();
+      toast(bag.length
+        ? `${bag.length} in bag · idea only, no checkout`
+        : "Bag empty · add something from a product");
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+
+    refreshBagCount();
+
+    fetch("./catalog.json?v=" + encodeURIComponent(CATALOG_CACHE_BUST))
+      .then((r) => r.json())
+      .then(async (data) => {
+        catalog = data;
+        products = (data.products || []).map((p, i) => ({
+          ...p,
+          catalogIndex: Number.isFinite(p.catalogIndex) ? p.catalogIndex : i,
+          kit: p.kit || p.theme || null
+        }));
+        // Seed defaults into LS only if empty so first visit matches catalog featured set
+        const statusMap = loadMap(LS_STATUS);
+        const teaserMap = loadMap(LS_TEASER);
+        let seeded = false;
+        products.forEach((p) => {
+          if (!Object.prototype.hasOwnProperty.call(statusMap, p.id)) {
+            statusMap[p.id] = p.status || "idea";
+            seeded = true;
+          }
+          if (!Object.prototype.hasOwnProperty.call(teaserMap, p.id)) {
+            teaserMap[p.id] = !!p.homepageTeaser;
+            seeded = true;
+          }
+        });
+        if (seeded) {
+          saveMap(LS_STATUS, statusMap);
+          saveMap(LS_TEASER, teaserMap);
+        }
+        await hydrateFavesFromDisk();
+        render();
+        const params = new URLSearchParams(location.search);
+        const sku = params.get("sku");
+        if (sku) {
+          const hit = products.find((p) => p.sku === sku || p.id === sku);
+          if (hit) openModal(hit.id);
+        }
+      })
+      .catch(() => {
+        document.getElementById("all-grid").innerHTML =
+          `<div class="empty">Could not load catalog.json</div>`;
+      });
+  </script>
+</body>
+</html>
