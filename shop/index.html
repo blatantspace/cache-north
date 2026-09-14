@@ -604,6 +604,7 @@
           <button type="button" class="chip" data-lineage="v4-021">021 Strap</button>
           <button type="button" class="chip" data-lineage="v4-027">027 Gaunt</button>
           <button type="button" class="chip" data-lineage="v4-034">034 Point</button>
+          <button type="button" class="chip" data-lineage="leather50">−50 leather</button>
           <button type="button" class="chip" data-lineage="extras">Extras kit</button>
           <button type="button" class="chip" data-lineage="earlier">Earlier</button>
         </div>
@@ -696,7 +697,7 @@
     let selectedSize = null;
     let activeId = null;
     let diskSyncOk = null;
-    const CATALOG_CACHE_BUST = "20260914-niche";
+    const CATALOG_CACHE_BUST = "20260914-leather50";
 
     function isLocalHost() {
       const h = location.hostname;
@@ -996,6 +997,9 @@
     function matchesLineage(p) {
       if (lineageFilter === "all") return true;
       const id = String(p.id || "");
+      if (lineageFilter === "leather50") {
+        return p.lineage === "leather50" || id.startsWith("v8-col-");
+      }
       if (lineageFilter === "extras") {
         return (p.lineage === "extras") || id.startsWith("v6-") ||
           (id.startsWith("v7-") && !id.startsWith("v7-gs") &&

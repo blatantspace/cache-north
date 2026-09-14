@@ -31,6 +31,16 @@ Earlier approvals ship as `idea` (promote anytime): v3-002, v3-004, v3-009, v3-0
 
 **v7 kit extras** (32 SKUs from `refs/outfit-mashups-v7-kit/`, all `idea`, lineage `extras`): hats (8), Visor Seal masks (8), leather wind protection (8, kit `protection`), thermal goggles (8, eyewear). Kit filter · Wind leather. Lineage · Extras kit.
 
+### Creative read (Sep 13) — buddy liked cowls / storm collars
+
+Leather used **functionally** for wind + cold (throat / nape / seal) beat
+pieces that only look nice. **Modern outdoor silhouettes** that **happen to be
+leather** — not medieval / LARP tannery cosplay. See `RUNWAY-DRIVE.md` § Wear kit lock.
+
+**v8 −50 leather** (16 SKUs, lineage `leather50`, kit `protection`): storm
+collars, cowls, hood-interface seals, powder cuffs, overboot gaiter, mitt cuff
+ring. Shop filter · **−50 leather**.
+
 **Sort** defaults to newest → oldest via `addedAt`. Toggle Oldest in the Sort row. Clear filters resets Status / Kit / Lineage.
 
 ## Promote / demote
