@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/mosaic.css?v=20260914-everywhere" />
   <style>
     :root {
       --void: #0A0C0E;
@@ -78,8 +79,9 @@
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      padding: 0.4rem 0.65rem;
+      padding: 0.4rem 0.75rem;
       border: 1px solid rgba(224, 32, 32, 0.45);
+      border-radius: 999px;
       color: var(--snow);
     }
     .fave-pill .n {
@@ -365,8 +367,11 @@
     }
 
     .empty {
+      column-span: all;
+      margin: 1rem 1.25rem;
       padding: 2.5rem 1.25rem;
       border: 1px dashed rgba(197, 204, 211, 0.2);
+      border-radius: var(--cn-radius, 1.25rem);
       color: var(--steel-dim);
       text-align: center;
       display: grid;
@@ -438,86 +443,42 @@
     </nav>
   </header>
 
-  <div class="wrap">
-    <section class="hero">
-      <p class="kicker">Extras · personal shortlist · CAD · not for sale</p>
-      <h1>Faves<span class="led" aria-hidden="true"></span></h1>
-      <p>
-        Your private shelf of Wear kit that hits. Heart from the shop (or here),
-        sort and filter the list, jot why you liked it. Separate from Promote.
-        Liking ≠ featuring the storefront.
-      </p>
+  <div class="wrap" style="width:100%;max-width:1400px;padding:0 0 4rem;margin:0 auto">
+    <section class="hero" style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem 0.5rem;border:0;margin:0">
+      <h1 style="font-size:1.35rem;letter-spacing:-0.04em">Faves</h1>
+      <p class="meta" style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--steel-dim)"><span id="list-count">0</span> tiles</p>
     </section>
 
-    <div class="toolbar">
-      <div class="toolbar-row">
-        <div class="sort-wrap">
-          <span class="filter-label">Sort</span>
-          <label class="sr-only" for="sort-select">Sort faves</label>
-          <select id="sort-select">
-            <option value="newest">Newest faved</option>
+    <div class="toolbar" style="position:sticky;top:52px;z-index:30;background:rgba(10,12,14,0.9);backdrop-filter:blur(14px);padding:0.65rem 1rem 0.85rem;border-bottom:1px solid rgba(197,204,211,0.08)">
+      <div class="toolbar-row" style="display:flex;flex-wrap:nowrap;gap:0.45rem;overflow-x:auto;scrollbar-width:none">
+        <div class="filters" style="display:flex;gap:0.35rem;flex:1">
+          <button type="button" class="cn-chip on" data-theme="all">All</button>
+          <button type="button" class="cn-chip" data-theme="boots">Boots</button>
+          <button type="button" class="cn-chip" data-theme="gumsole">Gumsole</button>
+          <button type="button" class="cn-chip" data-theme="protection">Leather</button>
+          <button type="button" class="cn-chip" data-theme="hat">Hats</button>
+          <button type="button" class="cn-chip" data-theme="eyewear">Eyewear</button>
+          <button type="button" class="cn-chip" data-lineage="leather50">−50</button>
+          <select id="sort-select" class="cn-chip" style="appearance:none;padding-right:1.5rem">
+            <option value="newest">Newest</option>
             <option value="name">Name</option>
-            <option value="price-asc">Price · low → high</option>
-            <option value="price-desc">Price · high → low</option>
-            <option value="lineage">Lineage</option>
-            <option value="theme">Kit type</option>
+            <option value="price-desc">$ high</option>
+            <option value="price-asc">$ low</option>
           </select>
         </div>
-        <div class="actions">
-          <button type="button" class="btn btn-ghost" id="btn-export">Export faves JSON</button>
-          <button type="button" class="btn btn-ghost" id="btn-import">Import JSON</button>
+        <div class="actions" style="display:flex;gap:0.35rem">
+          <button type="button" class="cn-btn cn-btn-ghost" id="btn-export">Export</button>
+          <button type="button" class="cn-btn cn-btn-ghost" id="btn-import">Import</button>
           <input type="file" id="import-file" accept="application/json,.json" class="sr-only" />
-          <button type="button" class="btn btn-ghost" id="btn-clear">Clear faves</button>
-        </div>
-      </div>
-      <div class="toolbar-row">
-        <div class="filters" role="tablist" aria-label="Filter by kit type">
-          <span class="filter-label">Kit</span>
-          <button type="button" class="chip on" data-theme="all">All</button>
-          <button type="button" class="chip" data-theme="boots">Boots</button>
-          <button type="button" class="chip" data-theme="gumsole">Gumsole</button>
-          <button type="button" class="chip" data-theme="shells">Shells</button>
-          <button type="button" class="chip" data-theme="gaiters">Gaiters</button>
-          <button type="button" class="chip" data-theme="overboots">Overboots</button>
-          <button type="button" class="chip" data-theme="footwear">Footwear</button>
-          <button type="button" class="chip" data-theme="mitts">Mitts</button>
-          <button type="button" class="chip" data-theme="hat">Hats</button>
-          <button type="button" class="chip" data-theme="eyewear">Eyewear</button>
-          <button type="button" class="chip" data-theme="mask">Masks</button>
-          <button type="button" class="chip" data-theme="protection">Wind leather</button>
-          <button type="button" class="chip" data-theme="skis">Skis</button>
-        </div>
-      </div>
-      <div class="toolbar-row">
-        <div class="filters" role="tablist" aria-label="Filter by parent keeper">
-          <span class="filter-label">Lineage</span>
-          <button type="button" class="chip on" data-lineage="all">All</button>
-          <button type="button" class="chip" data-lineage="v4-021">021 Strap</button>
-          <button type="button" class="chip" data-lineage="v4-027">027 Gaunt</button>
-          <button type="button" class="chip" data-lineage="v4-034">034 Point</button>
-          <button type="button" class="chip" data-lineage="extras">Extras kit</button>
-          <button type="button" class="chip" data-lineage="earlier">Earlier</button>
-        </div>
-      </div>
-      <div class="toolbar-row">
-        <div class="filters" role="tablist" aria-label="Filter by shop status">
-          <span class="filter-label">Status</span>
-          <button type="button" class="chip on" data-status="all">All</button>
-          <button type="button" class="chip" data-status="promoted">Promoted</button>
-          <button type="button" class="chip" data-status="idea">Ideas</button>
-          <button type="button" class="chip" data-status="archived">Archived</button>
+          <button type="button" class="cn-btn cn-btn-ghost" id="btn-clear">Clear</button>
         </div>
       </div>
     </div>
 
-    <p class="shelf-label">Your faves <span class="count" id="list-count">0</span></p>
-    <div class="list" id="fave-list"></div>
+    <div class="cn-mosaic" id="fave-list"></div>
 
-    <p class="note">
-      Faves live in localStorage (<code>cacheNorth.shop.faves</code>) as
-      <code>{ id: { favedAt, note } }</code>. Promote / teaser keys stay separate.
-      Same heart on Wear · Kit writes here. Catalogue · <code>catalog.json</code>.
-      On localhost, Ben’s machine also mirrors to <code>ben-faves.json</code> for agents.
+    <p class="note" style="padding:0.75rem 1.25rem;font-size:0.65rem;color:var(--steel-dim)">
+      Image mosaic · click a tile for the shop · ♡ to unfave.
       <span id="disk-sync-status" hidden></span>
     </p>
   </div>
@@ -536,7 +497,6 @@
     let lineageFilter = "all";
     let statusFilter = "all";
     let sortBy = "newest";
-    let noteTimers = {};
     let diskSyncOk = null;
 
     function isLocalHost() {
@@ -789,6 +749,9 @@
     function matchesLineage(p) {
       if (lineageFilter === "all") return true;
       const id = String(p.id || "");
+      if (lineageFilter === "leather50") {
+        return p.lineage === "leather50" || id.startsWith("v8-col-");
+      }
       if (lineageFilter === "extras") {
         return (p.lineage === "extras") || id.startsWith("v6-") ||
           (id.startsWith("v7-") && !id.startsWith("v7-gs") &&
@@ -801,7 +764,9 @@
         return !p.parentKeeper && !id.startsWith("v5-") &&
           !id.startsWith("v6-") &&
           !id.startsWith("v7-") &&
+          !id.startsWith("v8-") &&
           p.lineage !== "extras" &&
+          p.lineage !== "leather50" &&
           !["v4-021", "v4-027", "v4-034"].includes(p.id);
       }
       if (p.id === lineageFilter) return true;
@@ -827,44 +792,18 @@
       } catch { return iso; }
     }
 
-    function rowHTML(p) {
-      const status = p._status;
-      const note = p._fave.note || "";
+    function rowHTML(p, i = 0) {
+      const shapes = ["sq", "tall", "wide", "sq", "hero", "tall"];
+      const shape = shapes[i % shapes.length];
       return `
-        <article class="row faved" data-id="${escapeHtml(p.id)}">
-          <div class="row-media">
-            <a href="./?sku=${encodeURIComponent(p.sku)}">
-              <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy" />
-            </a>
-          </div>
-          <div class="row-body">
-            <div class="row-top">
-              <span class="sku">${escapeHtml(p.sku)}</span>
-              <div class="meta-chips">
-                <span class="tag">${escapeHtml(p.theme || "kit")}</span>
-                <span class="tag">${escapeHtml(lineageLabel(p))}</span>
-                <span class="tag status-${escapeHtml(status)}">${escapeHtml(status)}</span>
-                ${isNiche(p) ? `<span class="tag niche">Niche</span>` : ""}
-              </div>
-            </div>
-            <h3><a href="./?sku=${encodeURIComponent(p.sku)}">${escapeHtml(p.name)}</a></h3>
-            <p class="mash">Mash · ${escapeHtml(p.mash || "n/a")}</p>
-            <div class="price-row">
-              <span class="price">${money(p.price)}</span>
-              <span class="faved-at">Faved · ${escapeHtml(formatFavedAt(p._fave.favedAt))}</span>
-            </div>
-            <label class="note-label" for="note-${escapeHtml(p.id)}">Why you liked it</label>
-            <textarea
-              class="note-field"
-              id="note-${escapeHtml(p.id)}"
-              data-note="${escapeHtml(p.id)}"
-              placeholder="Optional note · stays local"
-              rows="2"
-            >${escapeHtml(note)}</textarea>
-            <div class="row-actions">
-              <button type="button" class="btn btn-led btn-sm" data-unfave="${escapeHtml(p.id)}">Unfave</button>
-              <a class="btn btn-ghost btn-sm" href="./?sku=${encodeURIComponent(p.sku)}">Open in shop</a>
-            </div>
+        <article class="cn-tile ${shape}" data-id="${escapeHtml(p.id)}">
+          <a class="cn-tile-media" href="./?sku=${encodeURIComponent(p.sku)}" style="display:block">
+            <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy" />
+          </a>
+          <button type="button" class="cn-tile-heart on" data-unfave="${escapeHtml(p.id)}" aria-label="Unfave">♥</button>
+          <div class="cn-tile-veil" aria-hidden="true">
+            <div class="name">${escapeHtml(p.name)}</div>
+            <div class="sub">${money(p.price)}</div>
           </div>
         </article>`;
     }
@@ -873,7 +812,7 @@
       return `
         <div class="empty">
           <p>No faves yet. Wander Wear · Kit and heart what hits.</p>
-          <a class="btn btn-led" href="./">Browse the shop</a>
+          <a class="cn-btn" href="./">Browse the shop</a>
         </div>`;
     }
 
@@ -933,31 +872,19 @@
         return;
       }
 
-      root.innerHTML = list.map(rowHTML).join("");
+      root.innerHTML = list.map((p, i) => rowHTML(p, i)).join("");
       bindRows(root);
     }
 
     function bindRows(root) {
       root.querySelectorAll("[data-unfave]").forEach((el) => {
-        el.addEventListener("click", () => {
+        el.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           const id = el.getAttribute("data-unfave");
           toggleFave(id, false);
           toast("Unfaved");
           render();
-        });
-      });
-      root.querySelectorAll("[data-note]").forEach((el) => {
-        el.addEventListener("input", () => {
-          const id = el.getAttribute("data-note");
-          clearTimeout(noteTimers[id]);
-          noteTimers[id] = setTimeout(() => {
-            setNote(id, el.value);
-          }, 280);
-        });
-        el.addEventListener("blur", () => {
-          const id = el.getAttribute("data-note");
-          clearTimeout(noteTimers[id]);
-          setNote(id, el.value);
         });
       });
     }
@@ -1078,18 +1005,33 @@
     document.querySelectorAll("[data-theme]").forEach((chip) => {
       chip.addEventListener("click", () => {
         themeFilter = chip.getAttribute("data-theme");
+        lineageFilter = "all";
         document.querySelectorAll("[data-theme]").forEach((c) =>
           c.classList.toggle("on", c === chip)
+        );
+        document.querySelectorAll("[data-lineage]").forEach((c) =>
+          c.classList.remove("on")
         );
         render();
       });
     });
     document.querySelectorAll("[data-lineage]").forEach((chip) => {
       chip.addEventListener("click", () => {
-        lineageFilter = chip.getAttribute("data-lineage");
-        document.querySelectorAll("[data-lineage]").forEach((c) =>
-          c.classList.toggle("on", c === chip)
-        );
+        const next = chip.getAttribute("data-lineage");
+        // Toggle −50 off when already active (no separate lineage All in this toolbar)
+        if (lineageFilter === next) {
+          lineageFilter = "all";
+          chip.classList.remove("on");
+        } else {
+          lineageFilter = next;
+          themeFilter = "all";
+          document.querySelectorAll("[data-theme]").forEach((c) =>
+            c.classList.toggle("on", c.getAttribute("data-theme") === "all")
+          );
+          document.querySelectorAll("[data-lineage]").forEach((c) =>
+            c.classList.toggle("on", c === chip)
+          );
+        }
         render();
       });
     });
@@ -1117,7 +1059,7 @@
     });
     document.getElementById("btn-clear").addEventListener("click", clearFaves);
 
-    fetch("./catalog.json?v=20260914-niche")
+    fetch("./catalog.json?v=20260914-everywhere")
       .then((r) => r.json())
       .then(async (data) => {
         products = (data.products || []).map((p) => ({

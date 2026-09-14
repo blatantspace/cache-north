@@ -13,6 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/mosaic.css?v=20260914-everywhere" />
   <style>
     :root {
       --void: #0A0C0E;
@@ -25,6 +26,8 @@
       --led: #E02020;
       --font: "Space Grotesk", system-ui, sans-serif;
       --mono: "IBM Plex Mono", ui-monospace, monospace;
+      --cn-radius: 1.25rem;
+      --cn-radius-sm: 999px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -125,18 +128,20 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--snow);
-      padding: 0.4rem 0.65rem;
+      padding: 0.4rem 0.85rem;
       border: 1px solid rgba(224, 32, 32, 0.55);
+      border-radius: var(--cn-radius-sm);
       background: rgba(224, 32, 32, 0.08);
     }
     .bar-wear:hover { color: var(--snow); opacity: 1; border-color: var(--led); background: rgba(224, 32, 32, 0.16); }
 
-    /* Wear teaser — driven by shop localStorage */
+    /* Wear teaser — image-first mosaic strip */
     .wear-teaser {
       display: none;
-      margin: 0 1.25rem 0.5rem;
-      padding: 0.85rem 1rem;
-      border: 1px solid rgba(197, 204, 211, 0.16);
+      margin: 0 1.25rem 0.75rem;
+      padding: 0.85rem 1rem 1rem;
+      border: 1px solid rgba(197, 204, 211, 0.12);
+      border-radius: var(--cn-radius);
       background: rgba(18, 22, 27, 0.72);
       backdrop-filter: blur(8px);
     }
@@ -146,7 +151,7 @@
       justify-content: space-between;
       align-items: baseline;
       gap: 1rem;
-      margin-bottom: 0.7rem;
+      margin-bottom: 0.75rem;
     }
     .wear-teaser-head .kicker {
       margin: 0;
@@ -173,28 +178,28 @@
     }
     .wear-teaser-card {
       flex: 0 0 auto;
-      width: 7.5rem;
+      width: 7.75rem;
       text-decoration: none;
+      border-radius: 1.1rem;
+      overflow: hidden;
+      background: var(--navy);
+      isolation: isolate;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .wear-teaser-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(0,0,0,0.35);
+      opacity: 1;
     }
     .wear-teaser-card img {
-      width: 7.5rem;
-      height: 7.5rem;
+      width: 7.75rem;
+      height: 9.5rem;
       object-fit: cover;
       background: var(--navy);
-      border: 1px solid rgba(197, 204, 211, 0.12);
+      display: block;
     }
     .wear-teaser-card span {
-      display: block;
-      margin-top: 0.35rem;
-      font-family: var(--mono);
-      font-size: 0.55rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--steel);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 7.5rem;
+      display: none;
     }
 
     /* HERO — brand + one line over live plate */
@@ -250,7 +255,7 @@
     .btn {
       display: inline-flex;
       align-items: center;
-      padding: 0.85rem 1.15rem;
+      padding: 0.85rem 1.25rem;
       background: var(--snow);
       color: var(--void);
       font-family: var(--mono);
@@ -259,6 +264,7 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       border: 1px solid var(--snow);
+      border-radius: var(--cn-radius-sm);
       transition: opacity 0.2s, transform 0.2s;
     }
     .btn:hover { opacity: 0.9; transform: translateY(-1px); color: var(--void); }
@@ -364,13 +370,14 @@
 
     .grid3 {
       display: grid;
-      gap: 0;
+      gap: 0.75rem;
       margin-top: 2rem;
-      border-top: 1px solid rgba(197,204,211,0.14);
     }
     .grid3 article {
-      padding: 1.35rem 0;
-      border-bottom: 1px solid rgba(197,204,211,0.1);
+      padding: 1.25rem 1.15rem;
+      border: 1px solid rgba(197,204,211,0.1);
+      border-radius: var(--cn-radius);
+      background: rgba(18, 22, 27, 0.35);
     }
     .grid3 h3 {
       font-size: 0.95rem;
@@ -448,14 +455,9 @@
       .plate-copy { max-width: 28rem; }
       .grid3 {
         grid-template-columns: repeat(3, 1fr);
-        gap: 0 2rem;
-        border-bottom: 1px solid rgba(197,204,211,0.1);
+        gap: 1rem;
       }
-      .grid3 article { border-bottom: none; padding: 1.5rem 0; }
-      .grid3 article + article {
-        border-left: 1px solid rgba(197,204,211,0.12);
-        padding-left: 2rem;
-      }
+      .grid3 article { padding: 1.4rem 1.25rem; }
       .split {
         display: grid;
         grid-template-columns: 1.05fr 0.95fr;
@@ -519,9 +521,11 @@
 
       <aside class="wear-teaser" id="wear-teaser" aria-label="Promoted wear ideas" hidden>
         <div class="wear-teaser-head">
-          <p class="kicker">Wear · pretend store · CAD</p>
-          <a href="shop/">Shop the kit →</a>
-          <a href="shop/faves.html" style="margin-left:0.75rem">Faves →</a>
+          <p class="kicker">Wear · kit</p>
+          <span>
+            <a href="shop/">Shop →</a>
+            <a href="shop/faves.html" style="margin-left:0.75rem">Faves →</a>
+          </span>
         </div>
         <div class="wear-teaser-row" id="wear-teaser-row"></div>
       </aside>
@@ -724,7 +728,7 @@
         try { return JSON.parse(localStorage.getItem(key) || "{}") || {}; }
         catch { return {}; }
       }
-      fetch("shop/catalog.json")
+      fetch("shop/catalog.json?v=20260914-everywhere")
         .then((r) => r.json())
         .then((data) => {
           const status = loadMap(LS_STATUS);
@@ -740,9 +744,8 @@
           });
           if (!picks.length) return;
           row.innerHTML = picks.map((p) => `
-            <a class="wear-teaser-card" href="shop/?sku=${encodeURIComponent(p.sku)}">
-              <img src="shop/${p.image}" alt="" loading="lazy" />
-              <span>${p.name}</span>
+            <a class="wear-teaser-card" href="shop/?sku=${encodeURIComponent(p.sku)}" title="${String(p.name || "").replace(/"/g, "&quot;")}">
+              <img src="shop/${p.image}" alt="${String(p.name || "").replace(/"/g, "&quot;")}" loading="lazy" />
             </a>
           `).join("");
           root.hidden = false;
