@@ -77,8 +77,9 @@
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      padding: 0.4rem 0.65rem;
+      padding: 0.4rem 0.75rem;
       border: 1px solid rgba(242, 244, 246, 0.28);
+      border-radius: 999px;
       color: var(--snow);
     }
     .bag-pill .n {
@@ -87,27 +88,27 @@
     }
 
     .wrap {
-      width: 100%;
-      margin: 0;
-      padding: 0 0 4rem;
+      width: min(1400px, 100%);
+      margin: 0 auto;
+      padding: 0 0 5rem;
     }
 
     .hero {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      padding: 0.85rem 1.25rem 0.65rem;
+      padding: 1rem 1.25rem 0.5rem;
     }
     .hero h1 {
-      font-size: 0.95rem;
+      font-size: 1.35rem;
       font-weight: 600;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
     }
     .hero .meta {
       font-family: var(--mono);
-      font-size: 0.55rem;
-      letter-spacing: 0.1em;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--steel-dim);
     }
@@ -115,28 +116,34 @@
     .toolbar {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      margin: 0;
-      padding: 0 1rem 0.75rem;
-      border-bottom: 1px solid rgba(197, 204, 211, 0.1);
+      gap: 0.55rem;
+      margin: 0 0 1rem;
+      padding: 0.65rem 1rem 0.85rem;
       position: sticky;
       top: 52px;
       z-index: 30;
-      background: rgba(10, 12, 14, 0.92);
-      backdrop-filter: blur(10px);
+      background: rgba(10, 12, 14, 0.9);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(197, 204, 211, 0.08);
     }
     .toolbar-row {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
+      flex-wrap: nowrap;
+      gap: 0.45rem;
       align-items: center;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 0.1rem;
     }
+    .toolbar-row::-webkit-scrollbar { display: none; }
     .filters {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.25rem;
+      flex-wrap: nowrap;
+      gap: 0.35rem;
       flex: 1;
       align-items: center;
+      min-width: 0;
     }
     .filter-label {
       font-family: var(--mono);
@@ -144,44 +151,40 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--steel-dim);
-      margin-right: 0.1rem;
+      flex-shrink: 0;
     }
     .chip {
-      padding: 0.3rem 0.5rem;
-      border: 1px solid rgba(197, 204, 211, 0.18);
+      flex-shrink: 0;
+      padding: 0.45rem 0.85rem;
+      border: 1px solid rgba(197, 204, 211, 0.16);
+      border-radius: 999px;
       font-family: var(--mono);
-      font-size: 0.52rem;
-      letter-spacing: 0.08em;
+      font-size: 0.58rem;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--steel-dim);
       transition: border-color 0.15s, color 0.15s, background 0.15s;
     }
     .chip:hover, .chip.on {
       color: var(--snow);
-      border-color: var(--snow);
+      border-color: rgba(242, 244, 246, 0.45);
     }
-    .chip.on { background: rgba(242, 244, 246, 0.08); }
-    .actions { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
+    .chip.on { background: rgba(242, 244, 246, 0.1); }
+    .actions { display: flex; flex-wrap: nowrap; gap: 0.35rem; align-items: center; flex-shrink: 0; }
     .empty-actions { margin-top: 0.85rem; display: flex; justify-content: center; gap: 0.5rem; }
-    .filter-meta {
-      font-family: var(--mono);
-      font-size: 0.52rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--steel-dim);
-    }
     .btn {
       display: inline-flex;
       align-items: center;
-      padding: 0.45rem 0.65rem;
+      padding: 0.45rem 0.8rem;
       background: var(--snow);
       color: var(--void);
       font-family: var(--mono);
       font-size: 0.55rem;
       font-weight: 500;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       border: 1px solid var(--snow);
+      border-radius: 999px;
       transition: opacity 0.2s;
     }
     .btn:hover { opacity: 0.9; }
@@ -197,7 +200,7 @@
       border-color: rgba(224, 32, 32, 0.55);
     }
     .btn-led:hover { border-color: var(--led); background: rgba(224, 32, 32, 0.08); }
-    .btn-sm { padding: 0.35rem 0.5rem; font-size: 0.52rem; }
+    .btn-sm { padding: 0.4rem 0.65rem; font-size: 0.55rem; }
 
     .shelf-label {
       font-family: var(--mono);
@@ -205,68 +208,88 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--steel-dim);
-      margin: 0.75rem 1rem 0.4rem;
+      margin: 1rem 1.25rem 0.5rem;
     }
     .shelf-label .count {
       color: var(--led);
       margin-left: 0.35rem;
     }
 
-    /* Image mosaic — almost no chrome */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 2px;
-      padding: 0 2px;
+    /* True mosaic — CSS columns, rounded tiles, varied heights */
+    .mosaic {
+      column-count: 2;
+      column-gap: 0.75rem;
+      padding: 0.35rem 1rem 1.5rem;
     }
-    @media (min-width: 720px) {
-      .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+    @media (min-width: 640px) {
+      .mosaic { column-count: 3; column-gap: 0.9rem; padding: 0.5rem 1.25rem 2rem; }
     }
-    @media (min-width: 1100px) {
-      .grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+    @media (min-width: 960px) {
+      .mosaic { column-count: 4; column-gap: 1rem; }
     }
-    .grid.featured { margin-bottom: 0.25rem; }
+    @media (min-width: 1280px) {
+      .mosaic { column-count: 5; column-gap: 1.1rem; }
+    }
 
     .card {
       position: relative;
+      display: block;
+      width: 100%;
+      break-inside: avoid;
+      margin: 0 0 0.75rem;
       background: var(--navy);
       border: 0;
-      aspect-ratio: 1;
+      border-radius: 1.15rem;
       overflow: hidden;
       cursor: pointer;
+      isolation: isolate;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
-    .card:hover { outline: 1px solid rgba(242, 244, 246, 0.45); outline-offset: -1px; z-index: 1; }
-    .card.promoted { outline: 1px solid rgba(224, 32, 32, 0.65); outline-offset: -1px; }
+    @media (min-width: 640px) {
+      .card { margin-bottom: 0.9rem; border-radius: 1.35rem; }
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+      z-index: 1;
+    }
+    .card.promoted {
+      box-shadow: 0 0 0 1.5px rgba(224, 32, 32, 0.7), 0 8px 24px rgba(0,0,0,0.25);
+    }
     .card.faved::after {
       content: "";
       position: absolute;
-      top: 0.4rem;
-      left: 0.4rem;
-      width: 0.35rem;
-      height: 0.35rem;
+      top: 0.65rem;
+      left: 0.65rem;
+      width: 0.45rem;
+      height: 0.45rem;
       border-radius: 50%;
       background: var(--led);
-      box-shadow: 0 0 8px rgba(224, 32, 32, 0.7);
+      box-shadow: 0 0 10px rgba(224, 32, 32, 0.75);
       z-index: 2;
       pointer-events: none;
     }
     .card-media {
       width: 100%;
-      height: 100%;
-      background: var(--navy);
+      background: linear-gradient(145deg, #1a2430, #0e141c);
     }
+    .card.tile-sq .card-media { aspect-ratio: 1; }
+    .card.tile-tall .card-media { aspect-ratio: 3 / 4; }
+    .card.tile-wide .card-media { aspect-ratio: 4 / 3; }
+    .card.tile-hero .card-media { aspect-ratio: 5 / 6; }
     .card-media img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.35s ease;
+      transition: transform 0.45s ease;
     }
-    .card:hover .card-media img { transform: scale(1.04); }
+    .card:hover .card-media img { transform: scale(1.05); }
     .card-veil {
       position: absolute;
       inset: auto 0 0 0;
-      padding: 1.75rem 0.55rem 0.5rem;
-      background: linear-gradient(to top, rgba(10,12,14,0.92), transparent);
+      padding: 2.25rem 0.85rem 0.75rem;
+      background: linear-gradient(to top, rgba(10,12,14,0.88) 15%, transparent);
       opacity: 0;
       transition: opacity 0.2s;
       pointer-events: none;
@@ -274,44 +297,48 @@
     .card:hover .card-veil,
     .card:focus-within .card-veil { opacity: 1; }
     .card-veil .name {
-      font-size: 0.72rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
       line-height: 1.2;
     }
     .card-veil .price {
       font-family: var(--mono);
-      font-size: 0.55rem;
-      letter-spacing: 0.06em;
+      font-size: 0.58rem;
+      letter-spacing: 0.05em;
       color: var(--steel);
-      margin-top: 0.15rem;
+      margin-top: 0.2rem;
     }
     .card-fave {
       position: absolute;
-      top: 0.35rem;
-      right: 0.35rem;
+      top: 0.55rem;
+      right: 0.55rem;
       z-index: 3;
-      width: 1.7rem;
-      height: 1.7rem;
+      width: 2.15rem;
+      height: 2.15rem;
       display: grid;
       place-items: center;
       border-radius: 50%;
       background: rgba(10, 12, 14, 0.55);
-      border: 1px solid rgba(242, 244, 246, 0.2);
+      border: 1px solid rgba(242, 244, 246, 0.22);
       color: var(--snow);
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       line-height: 1;
-      opacity: 0;
-      transition: opacity 0.15s, border-color 0.15s, color 0.15s;
+      opacity: 0.85;
+      transition: opacity 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
     }
-    .card:hover .card-fave,
-    .card-fave.on { opacity: 1; }
+    @media (hover: hover) {
+      .card-fave { opacity: 0; }
+      .card:hover .card-fave,
+      .card-fave.on { opacity: 1; }
+    }
+    .card-fave:hover { transform: scale(1.08); }
     .card-fave.on {
       color: var(--led);
       border-color: rgba(224, 32, 32, 0.55);
+      opacity: 1;
     }
 
-    /* keep modal action button styles that referenced old card classes */
     .btn-fave.on {
       color: var(--led);
       border-color: rgba(224, 32, 32, 0.55);
@@ -331,6 +358,7 @@
       text-transform: uppercase;
       padding: 0.2rem 0.4rem;
       border: 1px solid rgba(197, 204, 211, 0.25);
+      border-radius: 999px;
       color: var(--steel-dim);
       white-space: nowrap;
     }
@@ -361,192 +389,54 @@
     }
 
     .empty {
-      padding: 2rem 1rem;
-      grid-column: 1 / -1;
-      border: 1px dashed rgba(197, 204, 211, 0.2);
+      padding: 3rem 1rem;
+      border: 1px dashed rgba(197, 204, 211, 0.18);
+      border-radius: 1.25rem;
       color: var(--steel-dim);
       font-family: var(--mono);
       font-size: 0.7rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       text-align: center;
+      margin: 1rem;
     }
 
-    /* Modal */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      z-index: 60;
-      background: rgba(10, 12, 14, 0.78);
-      backdrop-filter: blur(6px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 1.25rem;
-    }
-    .modal-backdrop.open { display: flex; }
-    .modal {
-      width: min(920px, 100%);
-      max-height: calc(100svh - 2.5rem);
-      overflow: auto;
-      background: var(--panel);
-      border: 1px solid rgba(197, 204, 211, 0.2);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-    @media (max-width: 760px) {
-      .modal { grid-template-columns: 1fr; }
-    }
-    .modal-media {
-      background: var(--navy);
-      min-height: 280px;
-    }
-    .modal-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .modal-body {
-      padding: 1.35rem 1.35rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
-    }
-    .modal-close {
-      align-self: flex-end;
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--steel-dim);
-      padding: 0.3rem 0.45rem;
-      border: 1px solid rgba(197, 204, 211, 0.2);
-    }
-    .modal-close:hover { color: var(--snow); border-color: var(--snow); }
-    .modal h2 {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 600;
-      letter-spacing: -0.035em;
-      line-height: 1.1;
-    }
-    .sizes {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-    }
-    .size {
-      min-width: 2.6rem;
-      padding: 0.45rem 0.55rem;
-      text-align: center;
-      border: 1px solid rgba(197, 204, 211, 0.22);
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.06em;
-      color: var(--steel);
-    }
-    .size.on, .size:hover {
-      border-color: var(--snow);
-      color: var(--snow);
-    }
-    .check {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.55rem;
-      font-size: 0.85rem;
-      color: var(--steel);
-      cursor: pointer;
-    }
-    .check input { margin-top: 0.2rem; accent-color: var(--led); }
-
-    .toast {
-      position: fixed;
-      bottom: 1.25rem;
-      left: 50%;
-      transform: translateX(-50%) translateY(120%);
-      z-index: 80;
-      padding: 0.85rem 1.1rem;
-      background: var(--snow);
-      color: var(--void);
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: transform 0.25s ease;
-      pointer-events: none;
-      max-width: calc(100% - 2rem);
-      text-align: center;
-    }
-    .toast.show { transform: translateX(-50%) translateY(0); }
-
-    .note {
-      margin-top: 2.5rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(197, 204, 211, 0.12);
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.06em;
-      color: var(--steel-dim);
-      line-height: 1.6;
-    }
-
-    /* Niche · quieter shelf below core kit */
     .niche-block {
-      margin-top: 3.25rem;
-      padding-top: 1.35rem;
-      border-top: 1px dashed rgba(197, 204, 211, 0.14);
-      opacity: 0.72;
+      margin: 1.5rem 1rem 0;
+      border: 1px solid rgba(197, 204, 211, 0.1);
+      border-radius: 1.25rem;
+      overflow: hidden;
+      background: rgba(18, 22, 27, 0.4);
     }
-    .niche-block[open] { opacity: 0.88; }
     .niche-summary {
       list-style: none;
       cursor: pointer;
       display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 0.55rem 1rem;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
       font-family: var(--mono);
       font-size: 0.58rem;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--steel-dim);
-      padding: 0.35rem 0;
-      user-select: none;
     }
     .niche-summary::-webkit-details-marker { display: none; }
-    .niche-summary::before {
-      content: "+";
-      display: inline-block;
-      width: 0.9rem;
-      color: var(--steel-dim);
-      font-weight: 500;
-    }
-    .niche-block[open] .niche-summary::before { content: "–"; }
-    .niche-summary:hover { color: var(--snow); }
-    .niche-summary .niche-title { color: var(--steel-dim); font-weight: 500; }
-    .niche-summary .niche-hint { opacity: 0.75; letter-spacing: 0.08em; }
-    .niche-summary .count { color: var(--steel-dim); margin-left: 0; }
-    .niche-inner {
-      margin-top: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
+    .niche-title { color: var(--snow); }
+    .niche-hint { opacity: 0.7; }
+    .niche-inner { padding: 0 0.75rem 1rem; }
     .niche-filters {
       display: flex;
       flex-wrap: wrap;
       gap: 0.35rem;
-      align-items: center;
+      margin-bottom: 0.75rem;
     }
-    .niche-filters .chip {
-      padding: 0.35rem 0.55rem;
-      font-size: 0.55rem;
-      border-color: rgba(197, 204, 211, 0.16);
-      color: var(--steel-dim);
+    .niche-grid.mosaic {
+      padding: 0;
+      column-count: 2;
     }
-    .niche-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 2px;
+    @media (min-width: 720px) {
+      .niche-grid.mosaic { column-count: 3; }
     }
     .badge-niche {
       font-family: var(--mono);
@@ -555,8 +445,116 @@
       text-transform: uppercase;
       padding: 0.15rem 0.35rem;
       border: 1px solid rgba(197, 204, 211, 0.2);
+      border-radius: 999px;
       color: var(--steel-dim);
       white-space: nowrap;
+    }
+
+    /* Modal — image first */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      background: rgba(5, 6, 8, 0.72);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      width: min(920px, 100%);
+      max-height: min(92svh, 900px);
+      display: grid;
+      grid-template-columns: 1fr;
+      background: var(--panel);
+      border-radius: 1.5rem;
+      overflow: hidden;
+      border: 1px solid rgba(197, 204, 211, 0.12);
+    }
+    @media (min-width: 800px) {
+      .modal { grid-template-columns: 1.15fr 0.85fr; }
+    }
+    .modal-media {
+      background: var(--navy);
+      min-height: 42vw;
+      max-height: 50svh;
+    }
+    @media (min-width: 800px) {
+      .modal-media { min-height: 100%; max-height: none; }
+    }
+    .modal-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .modal-body {
+      padding: 1.25rem 1.35rem 1.5rem;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .modal-close {
+      align-self: flex-end;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+      padding: 0.35rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(197, 204, 211, 0.2);
+    }
+    .modal-body h2 {
+      font-size: 1.45rem;
+      letter-spacing: -0.035em;
+      font-weight: 600;
+      line-height: 1.15;
+    }
+    .sizes { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .size {
+      padding: 0.4rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(197, 204, 211, 0.22);
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
+    }
+    .size.on {
+      color: var(--snow);
+      border-color: var(--snow);
+      background: rgba(242, 244, 246, 0.08);
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 1.25rem;
+      transform: translateX(-50%) translateY(120%);
+      z-index: 90;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: var(--snow);
+      color: var(--void);
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: transform 0.25s ease;
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    .note {
+      padding: 0.5rem 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.04em;
+      color: var(--steel-dim);
     }
   </style>
 </head>
@@ -568,8 +566,8 @@
     </a>
     <nav class="bar-nav">
       <a href="../">Muster</a>
-      <a class="active" href="./">Wear · Kit</a>
-      <a href="./faves.html">Extras · Faves</a>
+      <a class="active" href="./">Wear</a>
+      <a href="./faves.html">Faves</a>
       <span class="bag-pill" id="bag-pill" title="Idea bag only">Bag <span class="n" id="bag-count">0</span></span>
     </nav>
   </header>
@@ -622,9 +620,9 @@
       </div>
     </div>
 
-    <div class="grid" id="all-grid"></div>
+    <div class="mosaic" id="all-grid"></div>
     <p class="shelf-label" id="promoted-shelf-label" hidden>Promoted <span class="count" id="promoted-count">0</span></p>
-    <div class="grid featured" id="featured-grid" hidden></div>
+    <div class="mosaic featured" id="featured-grid" hidden></div>
 
     <details class="niche-block" id="niche-block">
       <summary class="niche-summary">
@@ -638,7 +636,7 @@
           <button type="button" class="chip" data-niche-kit="mask">Masks</button>
           <button type="button" class="chip" data-niche-kit="skis">Skis</button>
         </div>
-        <div class="niche-grid" id="niche-grid"></div>
+        <div class="mosaic niche-grid" id="niche-grid"></div>
       </div>
     </details>
 
@@ -690,7 +688,7 @@
     let selectedSize = null;
     let activeId = null;
     let diskSyncOk = null;
-    const CATALOG_CACHE_BUST = "20260914-mosaic";
+    const CATALOG_CACHE_BUST = "20260914-mosaic2";
 
     function isLocalHost() {
       const h = location.hostname;
@@ -897,11 +895,18 @@
       toast._t = setTimeout(() => el.classList.remove("show"), 2600);
     }
 
-    function cardHTML(p) {
+    function tileClass(p, i) {
+      const shapes = ["tile-sq", "tile-tall", "tile-wide", "tile-sq", "tile-hero", "tile-tall"];
+      if (p._status === "promoted" || isFaved(p.id)) return "tile-hero";
+      return shapes[i % shapes.length];
+    }
+
+    function cardHTML(p, i = 0) {
       const status = resolveStatus(p);
       const faved = isFaved(p.id);
+      const shape = tileClass({ ...p, _status: status }, i);
       return `
-        <article class="card ${status}${faved ? " faved" : ""}" data-id="${p.id}" data-open="${p.id}" title="${escapeAttr(p.name)}">
+        <article class="card ${status} ${shape}${faved ? " faved" : ""}" data-id="${p.id}" data-open="${p.id}" title="${escapeAttr(p.name)}">
           <div class="card-media">
             <img src="${p.image}" alt="${escapeAttr(p.name)}" loading="lazy" />
           </div>
@@ -1068,7 +1073,7 @@
 
       // One mosaic — promoted tiles still get the red outline via .promoted class
       all.innerHTML = visible.length
-        ? visible.map(cardHTML).join("")
+        ? visible.map((p, i) => cardHTML(p, i)).join("")
         : emptyStateHTML();
       if (feat) {
         feat.hidden = true;
@@ -1079,7 +1084,7 @@
 
       if (nicheGrid) {
         nicheGrid.innerHTML = nicheVisible.length
-          ? nicheVisible.map(cardHTML).join("")
+          ? nicheVisible.map((p, i) => cardHTML(p, i)).join("")
           : `<div class="empty">No niche matches</div>`;
         bindCards(nicheGrid);
       }
