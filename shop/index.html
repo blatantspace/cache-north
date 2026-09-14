@@ -87,80 +87,71 @@
     }
 
     .wrap {
-      width: min(1120px, calc(100% - 2.5rem));
-      margin: 0 auto;
-      padding: 2rem 0 5rem;
+      width: 100%;
+      margin: 0;
+      padding: 0 0 4rem;
     }
 
     .hero {
-      display: grid;
-      gap: 0.75rem;
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid rgba(197, 204, 211, 0.14);
-    }
-    .kicker {
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--led);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1.25rem 0.65rem;
     }
     .hero h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
+      font-size: 0.95rem;
       font-weight: 600;
-      letter-spacing: -0.045em;
-      line-height: 1.05;
+      letter-spacing: -0.03em;
     }
-    .hero h1 .led {
-      display: inline-block;
-      width: 0.12em;
-      height: 0.12em;
-      margin: 0 0.02em 0.1em;
-      border-radius: 50%;
-      background: var(--led);
-      box-shadow: 0 0 12px rgba(224, 32, 32, 0.55);
-      vertical-align: middle;
-    }
-    .hero p {
-      max-width: 36rem;
-      color: var(--steel);
-      font-size: 1.02rem;
+    .hero .meta {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--steel-dim);
     }
 
     .toolbar {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      margin-bottom: 1.75rem;
+      gap: 0.4rem;
+      margin: 0;
+      padding: 0 1rem 0.75rem;
+      border-bottom: 1px solid rgba(197, 204, 211, 0.1);
+      position: sticky;
+      top: 52px;
+      z-index: 30;
+      background: rgba(10, 12, 14, 0.92);
+      backdrop-filter: blur(10px);
     }
     .toolbar-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.65rem;
+      gap: 0.35rem;
       align-items: center;
     }
     .filters {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
+      gap: 0.25rem;
       flex: 1;
       align-items: center;
     }
     .filter-label {
       font-family: var(--mono);
-      font-size: 0.55rem;
-      letter-spacing: 0.12em;
+      font-size: 0.5rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--steel-dim);
-      margin-right: 0.15rem;
+      margin-right: 0.1rem;
     }
     .chip {
-      padding: 0.45rem 0.7rem;
-      border: 1px solid rgba(197, 204, 211, 0.22);
+      padding: 0.3rem 0.5rem;
+      border: 1px solid rgba(197, 204, 211, 0.18);
       font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.1em;
+      font-size: 0.52rem;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--steel-dim);
       transition: border-color 0.15s, color 0.15s, background 0.15s;
@@ -170,11 +161,11 @@
       border-color: var(--snow);
     }
     .chip.on { background: rgba(242, 244, 246, 0.08); }
-    .actions { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: center; }
+    .actions { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
     .empty-actions { margin-top: 0.85rem; display: flex; justify-content: center; gap: 0.5rem; }
     .filter-meta {
       font-family: var(--mono);
-      font-size: 0.58rem;
+      font-size: 0.52rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--steel-dim);
@@ -182,22 +173,22 @@
     .btn {
       display: inline-flex;
       align-items: center;
-      padding: 0.7rem 0.95rem;
+      padding: 0.45rem 0.65rem;
       background: var(--snow);
       color: var(--void);
       font-family: var(--mono);
-      font-size: 0.62rem;
+      font-size: 0.55rem;
       font-weight: 500;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       border: 1px solid var(--snow);
-      transition: opacity 0.2s, transform 0.2s;
+      transition: opacity 0.2s;
     }
-    .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn:hover { opacity: 0.9; }
     .btn-ghost {
       background: transparent;
       color: var(--snow);
-      border-color: rgba(242, 244, 246, 0.28);
+      border-color: rgba(242, 244, 246, 0.22);
     }
     .btn-ghost:hover { border-color: var(--snow); }
     .btn-led {
@@ -206,69 +197,125 @@
       border-color: rgba(224, 32, 32, 0.55);
     }
     .btn-led:hover { border-color: var(--led); background: rgba(224, 32, 32, 0.08); }
-    .btn-sm { padding: 0.45rem 0.65rem; font-size: 0.58rem; }
+    .btn-sm { padding: 0.35rem 0.5rem; font-size: 0.52rem; }
 
     .shelf-label {
       font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.14em;
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--steel-dim);
-      margin: 0 0 0.85rem;
+      margin: 0.75rem 1rem 0.4rem;
     }
     .shelf-label .count {
       color: var(--led);
-      margin-left: 0.4rem;
+      margin-left: 0.35rem;
     }
 
+    /* Image mosaic — almost no chrome */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 2px;
+      padding: 0 2px;
     }
-    .grid.featured {
-      margin-bottom: 2.25rem;
+    @media (min-width: 720px) {
+      .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
     }
+    @media (min-width: 1100px) {
+      .grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+    }
+    .grid.featured { margin-bottom: 0.25rem; }
 
     .card {
-      background: var(--panel);
-      border: 1px solid rgba(197, 204, 211, 0.12);
-      display: flex;
-      flex-direction: column;
-      min-height: 100%;
-      transition: border-color 0.2s;
-    }
-    .card:hover { border-color: rgba(197, 204, 211, 0.35); }
-    .card.promoted { border-color: rgba(224, 32, 32, 0.35); }
-    .card.faved { box-shadow: inset 0 0 0 1px rgba(224, 32, 32, 0.22); }
-    .btn-fave.on {
-      color: var(--led);
-      border-color: rgba(224, 32, 32, 0.55);
-      background: rgba(224, 32, 32, 0.08);
-    }
-    .card-media {
-      aspect-ratio: 1;
+      position: relative;
       background: var(--navy);
+      border: 0;
+      aspect-ratio: 1;
       overflow: hidden;
       cursor: pointer;
+    }
+    .card:hover { outline: 1px solid rgba(242, 244, 246, 0.45); outline-offset: -1px; z-index: 1; }
+    .card.promoted { outline: 1px solid rgba(224, 32, 32, 0.65); outline-offset: -1px; }
+    .card.faved::after {
+      content: "";
+      position: absolute;
+      top: 0.4rem;
+      left: 0.4rem;
+      width: 0.35rem;
+      height: 0.35rem;
+      border-radius: 50%;
+      background: var(--led);
+      box-shadow: 0 0 8px rgba(224, 32, 32, 0.7);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .card-media {
+      width: 100%;
+      height: 100%;
+      background: var(--navy);
     }
     .card-media img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.35s ease;
     }
-    .card-body {
-      padding: 1rem 1rem 1.1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
-      flex: 1;
+    .card:hover .card-media img { transform: scale(1.04); }
+    .card-veil {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 1.75rem 0.55rem 0.5rem;
+      background: linear-gradient(to top, rgba(10,12,14,0.92), transparent);
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
     }
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 0.5rem;
-      align-items: flex-start;
+    .card:hover .card-veil,
+    .card:focus-within .card-veil { opacity: 1; }
+    .card-veil .name {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .card-veil .price {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.06em;
+      color: var(--steel);
+      margin-top: 0.15rem;
+    }
+    .card-fave {
+      position: absolute;
+      top: 0.35rem;
+      right: 0.35rem;
+      z-index: 3;
+      width: 1.7rem;
+      height: 1.7rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(10, 12, 14, 0.55);
+      border: 1px solid rgba(242, 244, 246, 0.2);
+      color: var(--snow);
+      font-size: 0.75rem;
+      line-height: 1;
+      opacity: 0;
+      transition: opacity 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .card:hover .card-fave,
+    .card-fave.on { opacity: 1; }
+    .card-fave.on {
+      color: var(--led);
+      border-color: rgba(224, 32, 32, 0.55);
+    }
+
+    /* keep modal action button styles that referenced old card classes */
+    .btn-fave.on {
+      color: var(--led);
+      border-color: rgba(224, 32, 32, 0.55);
+      background: rgba(224, 32, 32, 0.08);
     }
     .sku {
       font-family: var(--mono);
@@ -292,41 +339,17 @@
       border-color: rgba(224, 32, 32, 0.5);
     }
     .status.archived { opacity: 0.55; }
-    .card h3 {
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      cursor: pointer;
-    }
-    .card h3:hover { opacity: 0.85; }
-    .blurb {
-      color: var(--steel);
-      font-size: 0.9rem;
-      flex: 1;
-    }
+    .blurb { color: var(--steel); font-size: 0.9rem; }
     .mash {
       font-family: var(--mono);
       font-size: 0.62rem;
       line-height: 1.45;
       color: var(--steel-dim);
     }
-    .price-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-top: 0.25rem;
-    }
     .price {
       font-family: var(--mono);
       font-size: 0.85rem;
       letter-spacing: 0.04em;
-    }
-    .theme {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--steel-dim);
     }
     .card-actions {
       display: flex;
@@ -339,10 +362,11 @@
 
     .empty {
       padding: 2rem 1rem;
+      grid-column: 1 / -1;
       border: 1px dashed rgba(197, 204, 211, 0.2);
       color: var(--steel-dim);
       font-family: var(--mono);
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       text-align: center;
@@ -521,15 +545,9 @@
     }
     .niche-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 0.75rem;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 2px;
     }
-    .niche-grid .card {
-      border-color: rgba(197, 204, 211, 0.08);
-      background: rgba(18, 22, 27, 0.65);
-    }
-    .niche-grid .card h3 { font-size: 1rem; }
-    .niche-grid .blurb { font-size: 0.82rem; }
     .badge-niche {
       font-family: var(--mono);
       font-size: 0.5rem;
@@ -558,85 +576,64 @@
 
   <div class="wrap">
     <section class="hero">
-      <p class="kicker">Pretend storefront · CAD · not for sale</p>
-      <h1>Northern wear<span class="led" aria-hidden="true"></span></h1>
-      <p>
-        Fake shop for cache.north kit ideas. Browse like a store, heart personal faves,
-        bag what you like, promote keepers to the homepage strip. No checkout.
-        Prices are idea markers only.
-      </p>
+      <h1>Wear</h1>
+      <p class="meta"><span id="filter-summary">Mosaic</span></p>
     </section>
 
     <div class="toolbar">
       <div class="toolbar-row">
-        <div class="filters" role="tablist" aria-label="Filter by status">
-          <span class="filter-label">Status</span>
-          <button type="button" class="chip on" data-filter="all">All</button>
-          <button type="button" class="chip" data-filter="promoted">Promoted</button>
-          <button type="button" class="chip" data-filter="idea">Ideas</button>
-          <button type="button" class="chip" data-filter="archived">Archived</button>
-        </div>
-        <div class="actions">
-          <button type="button" class="btn btn-ghost" id="btn-export">Export promoted JSON</button>
-          <button type="button" class="btn btn-ghost" id="btn-reset">Reset promotes</button>
-        </div>
-      </div>
-      <div class="toolbar-row">
         <div class="filters" role="tablist" aria-label="Filter by kit type">
-          <span class="filter-label">Kit</span>
           <button type="button" class="chip on" data-theme="all">All</button>
           <button type="button" class="chip" data-theme="boots">Boots</button>
           <button type="button" class="chip" data-theme="gumsole">Gumsole</button>
           <button type="button" class="chip" data-theme="shells">Shells</button>
-          <button type="button" class="chip" data-theme="gaiters">Gaiters</button>
-          <button type="button" class="chip" data-theme="overboots">Overboots</button>
-          <button type="button" class="chip" data-theme="footwear">Footwear</button>
-          <button type="button" class="chip" data-theme="mitts">Mitts</button>
+          <button type="button" class="chip" data-theme="protection">Leather</button>
           <button type="button" class="chip" data-theme="hat">Hats</button>
           <button type="button" class="chip" data-theme="eyewear">Eyewear</button>
-          <button type="button" class="chip" data-theme="protection">Wind leather</button>
-        </div>
-      </div>
-      <div class="toolbar-row">
-        <div class="filters" role="tablist" aria-label="Filter by parent keeper">
-          <span class="filter-label">Lineage</span>
-          <button type="button" class="chip on" data-lineage="all">All</button>
-          <button type="button" class="chip" data-lineage="v4-021">021 Strap</button>
-          <button type="button" class="chip" data-lineage="v4-027">027 Gaunt</button>
-          <button type="button" class="chip" data-lineage="v4-034">034 Point</button>
-          <button type="button" class="chip" data-lineage="leather50">−50 leather</button>
-          <button type="button" class="chip" data-lineage="extras">Extras kit</button>
-          <button type="button" class="chip" data-lineage="earlier">Earlier</button>
-        </div>
-      </div>
-      <div class="toolbar-row">
-        <div class="filters" role="tablist" aria-label="Sort catalogue">
-          <span class="filter-label">Sort</span>
-          <button type="button" class="chip on" data-sort="newest">Newest</button>
-          <button type="button" class="chip" data-sort="oldest">Oldest</button>
+          <button type="button" class="chip" data-lineage="leather50">−50</button>
+          <button type="button" class="chip" data-filter="promoted">♥ shelf</button>
+          <button type="button" class="chip" data-sort="newest">New</button>
+          <button type="button" class="chip" data-sort="oldest">Old</button>
         </div>
         <div class="actions">
-          <span class="filter-meta" id="filter-summary">Showing all</span>
-          <button type="button" class="btn btn-ghost" id="btn-clear-filters">Clear filters</button>
+          <button type="button" class="btn btn-ghost" id="btn-clear-filters">Clear</button>
         </div>
+      </div>
+      <div class="toolbar-row" id="toolbar-more" hidden>
+        <div class="filters" role="tablist" aria-label="More filters">
+          <span class="filter-label">Status</span>
+          <button type="button" class="chip on" data-filter="all">All</button>
+          <button type="button" class="chip" data-filter="idea">Ideas</button>
+          <button type="button" class="chip" data-filter="archived">Archived</button>
+          <span class="filter-label">Line</span>
+          <button type="button" class="chip on" data-lineage="all">All</button>
+          <button type="button" class="chip" data-lineage="v4-021">021</button>
+          <button type="button" class="chip" data-lineage="v4-027">027</button>
+          <button type="button" class="chip" data-lineage="v4-034">034</button>
+          <button type="button" class="chip" data-lineage="extras">Extras</button>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-ghost" id="btn-export">Export</button>
+          <button type="button" class="btn btn-ghost" id="btn-reset">Reset</button>
+        </div>
+      </div>
+      <div class="toolbar-row">
+        <button type="button" class="chip" id="btn-more-filters">More filters</button>
       </div>
     </div>
 
-    <p class="shelf-label">Promoted shelf <span class="count" id="promoted-count">0</span></p>
-    <div class="grid featured" id="featured-grid"></div>
-
-    <p class="shelf-label">Full catalogue <span class="count" id="all-count">0</span></p>
     <div class="grid" id="all-grid"></div>
+    <p class="shelf-label" id="promoted-shelf-label" hidden>Promoted <span class="count" id="promoted-count">0</span></p>
+    <div class="grid featured" id="featured-grid" hidden></div>
 
     <details class="niche-block" id="niche-block">
       <summary class="niche-summary">
-        <span class="niche-title">Niche · not core kit</span>
-        <span class="niche-hint">Skis · masks · quieter shelf</span>
+        <span class="niche-title">Niche</span>
+        <span class="niche-hint">skis · masks</span>
         <span class="count" id="niche-count">0</span>
       </summary>
       <div class="niche-inner">
         <div class="niche-filters" role="tablist" aria-label="Filter niche by kit">
-          <span class="filter-label">Inside niche</span>
           <button type="button" class="chip on" data-niche-kit="all">All</button>
           <button type="button" class="chip" data-niche-kit="mask">Masks</button>
           <button type="button" class="chip" data-niche-kit="skis">Skis</button>
@@ -645,12 +642,8 @@
       </div>
     </details>
 
-    <p class="note">
-      Status and homepage-teaser flags save in localStorage
-      (<code>cacheNorth.shop.status</code>, <code>cacheNorth.shop.homepageTeasers</code>).
-      Personal faves · <code>cacheNorth.shop.faves</code> · see
-      <a href="./faves.html">Extras · Faves</a>.
-      Catalogue source of truth · <code>catalog.json</code>. See README.
+    <p class="note" style="padding:1rem 1.25rem;font-size:0.7rem;color:var(--steel-dim)">
+      Click a tile for detail · ♡ faves · promote lives in the modal.
       <span id="disk-sync-status" hidden></span>
     </p>
   </div>
@@ -697,7 +690,7 @@
     let selectedSize = null;
     let activeId = null;
     let diskSyncOk = null;
-    const CATALOG_CACHE_BUST = "20260914-leather50";
+    const CATALOG_CACHE_BUST = "20260914-mosaic";
 
     function isLocalHost() {
       const h = location.hostname;
@@ -906,43 +899,16 @@
 
     function cardHTML(p) {
       const status = resolveStatus(p);
-      const teaser = resolveTeaser(p);
       const faved = isFaved(p.id);
-      const niche = isNiche(p);
       return `
-        <article class="card ${status}${faved ? " faved" : ""}" data-id="${p.id}">
-          <div class="card-media" data-open="${p.id}">
+        <article class="card ${status}${faved ? " faved" : ""}" data-id="${p.id}" data-open="${p.id}" title="${escapeAttr(p.name)}">
+          <div class="card-media">
             <img src="${p.image}" alt="${escapeAttr(p.name)}" loading="lazy" />
           </div>
-          <div class="card-body">
-            <div class="card-top">
-              <span class="sku">${escapeHtml(p.sku)}</span>
-              <span style="display:flex;gap:0.3rem;flex-wrap:wrap;justify-content:flex-end">
-                ${niche ? `<span class="badge-niche">Niche</span>` : ""}
-                <span class="status ${status}">${status}</span>
-              </span>
-            </div>
-            <h3 data-open="${p.id}">${escapeHtml(p.name)}</h3>
-            <p class="blurb">${escapeHtml(p.blurb)}</p>
-            <p class="mash">Mash · ${escapeHtml(p.mash)}</p>
-            <div class="price-row">
-              <span class="price">${money(p.price)}</span>
-              <span class="theme">${escapeHtml(p.theme)}</span>
-            </div>
-            <div class="card-actions">
-              <button type="button" class="btn btn-ghost btn-sm btn-fave${faved ? " on" : ""}" data-fave="${p.id}" data-on="${faved ? "1" : "0"}" aria-pressed="${faved ? "true" : "false"}" title="${faved ? "Remove fave" : "Add to faves"}">
-                ${faved ? "♥ Faved" : "♡ Fave"}
-              </button>
-              ${status === "promoted"
-                ? `<button type="button" class="btn btn-ghost btn-sm" data-demote="${p.id}">Demote</button>`
-                : `<button type="button" class="btn btn-led btn-sm" data-promote="${p.id}">Promote</button>`}
-              ${status !== "archived"
-                ? `<button type="button" class="btn btn-ghost btn-sm" data-archive="${p.id}">Archive</button>`
-                : `<button type="button" class="btn btn-ghost btn-sm" data-idea="${p.id}">Restore idea</button>`}
-              <button type="button" class="btn btn-ghost btn-sm" data-teaser="${p.id}" data-on="${teaser ? "1" : "0"}">
-                ${teaser ? "Teaser on" : "Teaser off"}
-              </button>
-            </div>
+          <button type="button" class="card-fave${faved ? " on" : ""}" data-fave="${p.id}" data-on="${faved ? "1" : "0"}" aria-label="${faved ? "Unfave" : "Fave"}" aria-pressed="${faved ? "true" : "false"}">${faved ? "♥" : "♡"}</button>
+          <div class="card-veil" aria-hidden="true">
+            <div class="name">${escapeHtml(p.name)}</div>
+            <div class="price">${money(p.price)}</div>
           </div>
         </article>`;
     }
@@ -1081,11 +1047,11 @@
       }
       nicheVisible = sortProducts(nicheVisible);
 
-      const feat = document.getElementById("featured-grid");
       const all = document.getElementById("all-grid");
+      const feat = document.getElementById("featured-grid");
       const nicheGrid = document.getElementById("niche-grid");
-      document.getElementById("promoted-count").textContent = String(promoted.length);
-      document.getElementById("all-count").textContent = String(visible.length);
+      const promotedCount = document.getElementById("promoted-count");
+      if (promotedCount) promotedCount.textContent = String(promoted.length);
       const nicheCountEl = document.getElementById("niche-count");
       if (nicheCountEl) nicheCountEl.textContent = String(nicheVisible.length);
 
@@ -1096,16 +1062,21 @@
         if (themeFilter !== "all") bits.push(themeFilter);
         if (lineageFilter !== "all") bits.push(lineageFilter);
         summary.textContent = bits.length
-          ? `${visible.length} core · ${bits.join(" · ")}`
-          : `Showing ${visible.length} core · ${sortOrder}`;
+          ? `${visible.length} · ${bits.join(" · ")}`
+          : `${visible.length} tiles · ${sortOrder}`;
       }
 
-      feat.innerHTML = promoted.length
-        ? promoted.map(cardHTML).join("")
-        : `<div class="empty">No promoted ideas yet. Hit Promote on something that hits.</div>`;
+      // One mosaic — promoted tiles still get the red outline via .promoted class
       all.innerHTML = visible.length
         ? visible.map(cardHTML).join("")
         : emptyStateHTML();
+      if (feat) {
+        feat.hidden = true;
+        feat.innerHTML = "";
+      }
+      const promoLabel = document.getElementById("promoted-shelf-label");
+      if (promoLabel) promoLabel.hidden = true;
+
       if (nicheGrid) {
         nicheGrid.innerHTML = nicheVisible.length
           ? nicheVisible.map(cardHTML).join("")
@@ -1113,7 +1084,6 @@
         bindCards(nicheGrid);
       }
 
-      bindCards(feat);
       bindCards(all);
       document.querySelectorAll("[data-clear-filters]").forEach((btn) => {
         btn.addEventListener("click", (e) => {
@@ -1344,6 +1314,17 @@
       });
     });
     document.getElementById("btn-clear-filters").addEventListener("click", clearFilters);
+    const moreBtn = document.getElementById("btn-more-filters");
+    const morePanel = document.getElementById("toolbar-more");
+    if (moreBtn && morePanel) {
+      moreBtn.addEventListener("click", () => {
+        const open = morePanel.hasAttribute("hidden");
+        if (open) morePanel.removeAttribute("hidden");
+        else morePanel.setAttribute("hidden", "");
+        moreBtn.classList.toggle("on", open);
+        moreBtn.textContent = open ? "Less filters" : "More filters";
+      });
+    }
     document.getElementById("btn-export").addEventListener("click", exportPromoted);
     document.getElementById("btn-reset").addEventListener("click", resetPromotes);
     document.getElementById("modal-close").addEventListener("click", closeModal);
